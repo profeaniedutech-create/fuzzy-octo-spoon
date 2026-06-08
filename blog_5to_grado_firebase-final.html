@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amigos de 5° Hugo Leonelli</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:#3B82F6;--sky-light:#EFF6FF;--sun:#F59E0B;--green:#10B981;--green-light:#ECFDF5;
+    --coral:#F43F5E;--coral-light:#FFF1F2;--purple:#8B5CF6;--purple-light:#F5F3FF;
+    --teal:#0D9488;--teal-light:#F0FDFA;--bg:#F8FAFF;--white:#ffffff;
+    --text:#1e293b;--muted:#64748b;--border:#e2e8f0;--radius:16px;
+    --shadow:0 4px 24px rgba(59,130,246,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .view{display:none;}.view.active{display:block;}
+
+  /* HEADER */
+  header{background:linear-gradient(135deg,#0D9488 0%,#3B82F6 50%,#8B5CF6 100%);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(13,148,136,.30);}
+  .header-inner{max-width:1100px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Fredoka One',cursive;font-size:22px;color:white;display:flex;align-items:center;gap:10px;cursor:pointer;background:none;border:none;}
+  .logo span{font-size:28px;}
+  .header-nav{display:flex;align-items:center;gap:10px;}
+  .btn-header{padding:8px 18px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s;}
+  .btn-outline-white{background:rgba(255,255,255,.18);color:white;border:1.5px solid rgba(255,255,255,.5);}
+  .btn-outline-white:hover{background:rgba(255,255,255,.30);}
+  .btn-white{background:white;color:var(--teal);}
+  .btn-white:hover{background:var(--teal-light);}
+  #user-badge{background:rgba(255,255,255,.22);color:white;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:700;display:none;align-items:center;gap:6px;}
+  #user-badge.visible{display:flex;}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,#F0FDFA 0%,#EFF6FF 50%,#F5F3FF 100%);padding:70px 28px 50px;text-align:center;}
+  .hero-badge{display:inline-block;background:var(--teal-light);color:#134E4A;border:1.5px solid #99F6E4;border-radius:50px;padding:6px 18px;font-size:13px;font-weight:800;margin-bottom:20px;}
+  .hero h1{font-family:'Fredoka One',cursive;font-size:clamp(32px,5.5vw,58px);line-height:1.1;background:linear-gradient(135deg,#0D9488,#3B82F6,#8B5CF6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;}
+  .hero p{max-width:560px;margin:0 auto 32px;font-size:17px;color:var(--muted);line-height:1.7;}
+  .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:linear-gradient(135deg,#0D9488,#3B82F6);color:white;border:none;padding:14px 32px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(13,148,136,.35);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,148,136,.40);}
+  .btn-primary:disabled{opacity:.6;transform:none;cursor:not-allowed;}
+  .btn-secondary{background:white;color:var(--teal);border:2px solid #99F6E4;padding:14px 32px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;}
+  .btn-secondary:hover{border-color:var(--teal);background:var(--teal-light);}
+  .floating-icons{display:flex;justify-content:center;gap:20px;margin-top:40px;font-size:40px;flex-wrap:wrap;}
+  .float-icon{animation:float 3s ease-in-out infinite;display:inline-block;filter:drop-shadow(0 4px 6px rgba(0,0,0,.08));}
+  .float-icon:nth-child(2){animation-delay:.5s;}.float-icon:nth-child(3){animation-delay:1s;}
+  .float-icon:nth-child(4){animation-delay:1.5s;}.float-icon:nth-child(5){animation-delay:2s;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+  /* SECTION */
+  .section{max-width:1100px;margin:0 auto;padding:60px 28px;}
+  .section-title{font-family:'Fredoka One',cursive;font-size:32px;color:var(--text);margin-bottom:8px;}
+  .section-sub{color:var(--muted);font-size:16px;margin-bottom:32px;}
+
+  /* CARDS */
+  .posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+  .post-card{background:white;border-radius:var(--radius);border:1.5px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;}
+  .post-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .card-banner{height:110px;display:flex;align-items:center;justify-content:center;font-size:46px;position:relative;overflow:hidden;}
+  .card-banner-img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+  .card-banner-emoji{position:relative;z-index:1;font-size:46px;}
+  .card-type-badge{position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,.85);border-radius:6px;padding:3px 7px;font-size:10px;font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.3px;}
+  .card-body{padding:18px;}
+  .card-category{display:inline-block;font-size:11px;font-weight:800;padding:4px 10px;border-radius:50px;margin-bottom:10px;letter-spacing:.4px;text-transform:uppercase;}
+  .card-title{font-size:16px;font-weight:800;margin-bottom:8px;line-height:1.4;color:var(--text);}
+  .card-excerpt{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+  .card-footer{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;}
+  .card-author{display:flex;align-items:center;gap:6px;font-weight:700;}
+  .avatar-mini{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;}
+
+  /* STATS */
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:48px;}
+  .stat-card{background:white;border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;}
+  .stat-num{font-family:'Fredoka One',cursive;font-size:36px;margin-bottom:4px;}
+  .stat-label{font-size:13px;color:var(--muted);font-weight:600;}
+
+  /* TABS */
+  .tabs{display:flex;gap:6px;margin-bottom:28px;flex-wrap:wrap;}
+  .tab{padding:8px 16px;border-radius:50px;font-size:13px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--muted);transition:all .2s;white-space:nowrap;}
+  .tab.active{background:var(--teal);color:white;border-color:var(--teal);}
+  .tab:hover:not(.active){border-color:var(--teal);color:var(--teal);}
+
+  /* PAGINATION */
+  .pagination{display:flex;gap:8px;justify-content:center;margin-top:32px;flex-wrap:wrap;}
+  .page-btn{padding:8px 16px;border-radius:10px;border:1.5px solid var(--border);background:white;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .2s;}
+  .page-btn.active{background:var(--teal);color:white;border-color:var(--teal);}
+  .page-btn:hover:not(.active):not(:disabled){border-color:var(--teal);color:var(--teal);}
+  .page-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* OVERLAY / MODAL */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:200;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+  .overlay.open{display:flex;}
+  .modal{background:white;border-radius:24px;width:100%;max-width:520px;padding:36px;position:relative;animation:slideUp .3s ease;margin:auto;}
+  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal-close{position:absolute;top:16px;right:16px;background:var(--border);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .2s;}
+  .modal-close:hover{background:#cbd5e1;}
+  .modal-title{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px;}
+  .modal-sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+  .form-group{margin-bottom:16px;}
+  .form-label{font-size:13px;font-weight:700;color:var(--text);display:block;margin-bottom:6px;}
+  .form-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);transition:border-color .2s;outline:none;}
+  .form-input:focus{border-color:var(--teal);}
+  .form-select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;background:white;cursor:pointer;}
+  .form-select:focus{border-color:var(--teal);}
+  .form-textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);resize:vertical;min-height:130px;outline:none;}
+  .form-textarea:focus{border-color:var(--teal);}
+  .error-msg{background:#FFF1F2;color:#BE123C;border:1px solid #FECDD3;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;}
+  .success-msg{background:var(--green-light);color:#065F46;border:1px solid #A7F3D0;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:14px;display:none;}
+  .info-msg{background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:14px;}
+
+  /* PASSWORD STRENGTH */
+  .pass-strength{margin-top:6px;font-size:12px;font-weight:700;}
+  .pass-strength.weak{color:#BE123C;}.pass-strength.medium{color:#D97706;}.pass-strength.strong{color:#065F46;}
+
+  /* FILE UPLOAD */
+  .file-upload-area{border:2px dashed #CBD5E1;border-radius:14px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px;position:relative;}
+  .file-upload-area:hover,.file-upload-area.drag-over{border-color:var(--teal);background:var(--teal-light);}
+  .file-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .file-upload-icon{font-size:32px;margin-bottom:8px;}
+  .file-upload-text{font-size:14px;color:var(--muted);font-weight:600;}
+  .file-upload-hint{font-size:12px;color:#94A3B8;margin-top:4px;}
+  .file-preview{display:flex;align-items:center;gap:10px;background:#F8FAFF;border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin-top:8px;font-size:13px;}
+  .file-preview .file-icon{font-size:22px;flex-shrink:0;}
+  .file-preview .file-name{font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .file-preview .remove-file{background:none;border:none;cursor:pointer;color:var(--coral);font-size:18px;padding:0;flex-shrink:0;}
+  .content-type-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .ctype-tab{padding:7px 14px;border-radius:10px;border:1.5px solid var(--border);background:white;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--muted);}
+  .ctype-tab.active{background:var(--teal);color:white;border-color:var(--teal);}
+  .ctype-tab:hover:not(.active){border-color:var(--teal);color:var(--teal);}
+
+  /* UPLOAD PROGRESS */
+  .upload-progress-wrap{margin-top:10px;}
+  .upload-progress-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px;display:flex;justify-content:space-between;}
+  .upload-progress-bar{height:6px;background:#E2E8F0;border-radius:10px;overflow:hidden;}
+  .upload-progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--teal),var(--sky));transition:width .3s;}
+
+  /* LOADING */
+  .loading-overlay{position:fixed;inset:0;background:rgba(248,250,255,.9);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+  .loading-overlay.hidden{display:none;}
+  .spinner{width:44px;height:44px;border:4px solid #E2E8F0;border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loading-text{font-weight:700;color:var(--muted);font-size:15px;}
+
+  /* TOAST */
+  .toast-container{position:fixed;bottom:24px;right:24px;z-index:400;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+  .toast{background:#1e293b;color:white;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:700;animation:toastIn .3s ease;pointer-events:auto;max-width:320px;display:flex;align-items:center;gap:10px;}
+  .toast.success{background:#065F46;}.toast.error{background:#BE123C;}.toast.warning{background:#92400E;}
+  @keyframes toastIn{from{transform:translateX(100px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+  @keyframes toastOut{to{transform:translateX(120px);opacity:0;}}
+
+  /* POST READ */
+  .post-full{max-width:740px;margin:0 auto;padding:40px 28px;}
+  .post-full-header{margin-bottom:28px;}
+  .post-full-category{display:inline-block;font-size:12px;font-weight:800;padding:5px 14px;border-radius:50px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.4px;}
+  .post-full h1{font-family:'Fredoka One',cursive;font-size:34px;line-height:1.2;margin-bottom:16px;}
+  .post-meta{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px;flex-wrap:wrap;}
+  .post-full-body{font-size:17px;line-height:1.85;color:#334155;white-space:pre-wrap;margin-top:28px;padding-top:28px;border-top:1.5px solid var(--border);}
+  .post-attachment{margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
+  .post-attachment-title{font-size:13px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
+  .attachment-card{display:flex;align-items:center;gap:12px;background:#F8FAFF;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all .2s;}
+  .attachment-card:hover{border-color:var(--teal);background:var(--teal-light);}
+  .attachment-card .att-icon{font-size:28px;flex-shrink:0;}
+  .attachment-card .att-info{flex:1;}
+  .attachment-card .att-name{font-weight:700;font-size:14px;}
+  .attachment-card .att-type{font-size:12px;color:var(--muted);margin-top:2px;}
+  .post-image-full{max-width:100%;border-radius:12px;margin-top:20px;border:1.5px solid var(--border);}
+  .post-audio{width:100%;margin-top:16px;border-radius:12px;}
+  .post-video{width:100%;border-radius:12px;margin-top:16px;max-height:400px;}
+  .edit-actions{display:flex;gap:10px;margin-top:28px;padding-top:20px;border-top:1px solid var(--border);}
+
+  /* WRITE */
+  .write-container{max-width:740px;margin:0 auto;padding:40px 28px;}
+  .write-header{display:flex;align-items:center;gap:14px;margin-bottom:32px;}
+  .write-header h2{font-family:'Fredoka One',cursive;font-size:28px;}
+  .back-btn{background:var(--border);border:none;padding:8px 16px;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;color:var(--muted);transition:background .2s;}
+  .back-btn:hover{background:#CBD5E1;}
+
+  /* ADMIN */
+  .admin-panel{background:white;border-radius:var(--radius);border:1.5px solid var(--border);overflow:hidden;}
+  .admin-panel-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .admin-panel-header h3{font-family:'Fredoka One',cursive;font-size:20px;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th{background:#F8FAFF;padding:12px 18px;text-align:left;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+  td{padding:13px 18px;border-bottom:1px solid #F1F5F9;}
+  tr:last-child td{border-bottom:none;}
+  .badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:11px;font-weight:800;}
+  .badge-green{background:var(--green-light);color:#065F46;}
+  .btn-sm{padding:5px 12px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border:1px solid;transition:all .2s;}
+  .btn-danger{border-color:#FECDD3;background:#FFF1F2;color:#BE123C;}
+  .btn-danger:hover{background:#FECDD3;}
+  .btn-success{border-color:#99F6E4;background:var(--teal-light);color:#134E4A;}
+  .btn-success:hover{background:#99F6E4;}
+
+  /* SECTION PILLS */
+  .section-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:50px;font-size:13px;font-weight:700;border:1.5px solid var(--border);background:white;margin:4px;}
+  .section-pill button{background:none;border:none;cursor:pointer;color:var(--coral);font-size:14px;line-height:1;padding:0;margin-left:2px;}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
+  .empty-state .emoji{font-size:60px;margin-bottom:16px;}
+  .empty-state h3{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text);margin-bottom:8px;}
+  .empty-state p{font-size:15px;max-width:340px;margin:0 auto 20px;}
+
+  /* FIREBASE STATUS */
+  .fb-status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 12px;border-radius:50px;}
+  .fb-status.online{background:#ECFDF5;color:#065F46;}
+  .fb-status.offline{background:#FFF1F2;color:#BE123C;}
+  .fb-status.connecting{background:#FFFBEB;color:#78350F;}
+  .fb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .fb-status.online .fb-dot{background:#10B981;}
+  .fb-status.offline .fb-dot{background:#F43F5E;}
+  .fb-status.connecting .fb-dot{background:#F59E0B;animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+
+  /* RECURSOS DIGITALES */
+  .recursos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:32px;}
+  .recurso-card{background:white;border-radius:var(--radius);border:1.5px solid var(--border);overflow:hidden;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;color:var(--text);}
+  .recurso-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,.12);}
+  .recurso-banner{height:130px;display:flex;align-items:center;justify-content:center;font-size:56px;position:relative;}
+  .recurso-body{padding:20px;}
+  .recurso-title{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:6px;line-height:1.2;}
+  .recurso-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+  .recurso-cta{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:8px 16px;border-radius:50px;color:white;transition:opacity .2s;}
+  .recurso-cta:hover{opacity:.85;}
+  .recurso-url{font-size:11px;color:var(--muted);margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  footer{background:white;border-top:1.5px solid var(--border);padding:28px;text-align:center;color:var(--muted);font-size:13px;margin-top:60px;}
+  @media(max-width:600px){
+    .hero{padding:50px 20px 36px;}.section{padding:40px 16px;}
+    .modal{padding:26px 20px;}.write-container,.post-full{padding:28px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Conectando con Firebase…</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <button class="logo" onclick="goHome()">
+      <span>💧</span> Amigos de 5° Hugo Leonelli
+    </button>
+    <div class="header-nav">
+      <div id="fb-status-badge" class="fb-status connecting"><div class="fb-dot"></div><span id="fb-status-text">Conectando…</span></div>
+      <div id="user-badge"><span id="badge-avatar">👤</span><span id="badge-name"></span></div>
+      <button class="btn-header btn-outline-white" onclick="goRecursos()" style="background:rgba(251,191,36,.25);border-color:rgba(251,191,36,.6)">🎮 Recursos</button>
+      <button class="btn-header btn-outline-white" id="btn-login-header" onclick="openLogin()">Ingresar</button>
+      <button class="btn-header btn-white" id="btn-logout-header" onclick="logout()" style="display:none">Salir</button>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HOME ========== -->
+<div id="view-home" class="view active">
+  <div class="hero">
+    <div class="hero-badge">💧 5° Grado · Año 2026 · Escuela Hugo Leonelli</div>
+    <h1>Amigos de 5°<br>Hugo Leonelli ✨</h1>
+    <p>Un espacio para compartir nuestros proyectos, ideas y aprendizajes. ¡Cada publicación es una voz de nuestro salón!</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="handlePublicarClick()">🚀 Publicar algo</button>
+      <button class="btn-secondary" onclick="scrollToPosts()">📖 Leer el blog</button>
+      <button class="btn-secondary" onclick="goRecursos()" style="border-color:#FCD34D;color:#92400E;background:#FFFBEB">🎮 Recursos digitales</button>
+    </div>
+    <div class="floating-icons">
+      <span class="float-icon">💧</span><span class="float-icon">📰</span>
+      <span class="float-icon">🌈</span><span class="float-icon">🏗️</span><span class="float-icon">🌍</span>
+    </div>
+  </div>
+
+  <div class="section" id="posts-section">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="stat-posts" style="color:var(--teal)">–</div><div class="stat-label">Publicaciones</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-authors" style="color:var(--purple)">–</div><div class="stat-label">Autores activos</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-students" style="color:var(--sky)">–</div><div class="stat-label">Alumnos</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--sun)">5°</div><div class="stat-label">Grado</div></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:24px">
+      <div>
+        <div class="section-title">📰 Publicaciones del blog</div>
+        <div class="section-sub">Todos los proyectos de nuestra clase</div>
+      </div>
+      <button class="btn-primary" id="btn-write" onclick="goWrite()" style="display:none">✏️ Nueva publicación</button>
+    </div>
+    <div class="tabs" id="category-tabs"></div>
+    <div id="posts-container"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+
+<!-- ========== RECURSOS DIGITALES ========== -->
+<div id="view-recursos" class="view">
+  <div class="section">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap">
+      <button class="back-btn" onclick="goHome()">← Volver</button>
+      <div>
+        <div class="section-title">🎮 Recursos Digitales</div>
+        <div class="section-sub">Plataformas y herramientas para aprender jugando</div>
+      </div>
+    </div>
+
+    <div class="recursos-grid">
+
+      <!-- Matific -->
+      <a class="recurso-card" href="https://www.matific.com/ar/es-ar/login-page/" target="_blank" rel="noopener noreferrer">
+        <div class="recurso-banner" style="background:linear-gradient(135deg,#6366F1 0%,#8B5CF6 100%)">
+          🔢
+        </div>
+        <div class="recurso-body">
+          <div class="recurso-title">Matific</div>
+          <div class="recurso-desc">Juegos y actividades de matemáticas diseñados para cada nivel. ¡Aprendé sumando, multiplicando y resolviendo desafíos!</div>
+          <span class="recurso-cta" style="background:linear-gradient(135deg,#6366F1,#8B5CF6)">
+            Ir a Matific →
+          </span>
+          <div class="recurso-url">matific.com</div>
+        </div>
+      </a>
+
+      <!-- Historias para Armar -->
+      <a class="recurso-card" href="https://creador.historiasparaarmar.org/" target="_blank" rel="noopener noreferrer">
+        <div class="recurso-banner" style="background:linear-gradient(135deg,#F43F5E 0%,#FB923C 100%)">
+          📖
+        </div>
+        <div class="recurso-body">
+          <div class="recurso-title">Historias para Armar</div>
+          <div class="recurso-desc">Creá tus propias historias eligiendo personajes, escenarios y aventuras. ¡Tu imaginación es el límite!</div>
+          <span class="recurso-cta" style="background:linear-gradient(135deg,#F43F5E,#FB923C)">
+            Crear historia →
+          </span>
+          <div class="recurso-url">creador.historiasparaarmar.org</div>
+        </div>
+      </a>
+
+      <!-- Club de Lectura -->
+      <a class="recurso-card" href="https://desafioelclub.leer.org/" target="_blank" rel="noopener noreferrer">
+        <div class="recurso-banner" style="background:linear-gradient(135deg,#0D9488 0%,#3B82F6 100%)">
+          🏆
+        </div>
+        <div class="recurso-body">
+          <div class="recurso-title">Club de Lectura</div>
+          <div class="recurso-desc">El desafío lector que te lleva a explorar libros, ganar puntos y competir con lectores de todo el país.</div>
+          <span class="recurso-cta" style="background:linear-gradient(135deg,#0D9488,#3B82F6)">
+            Unirme al club →
+          </span>
+          <div class="recurso-url">desafioelclub.leer.org</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ========== WRITE ========== -->
+<div id="view-write" class="view">
+  <div class="write-container">
+    <div class="write-header">
+      <button class="back-btn" onclick="goHome()">← Volver</button>
+      <h2 id="write-title">✏️ Nueva publicación</h2>
+    </div>
+    <div id="write-error" class="error-msg"></div>
+    <div class="form-group">
+      <label class="form-label">Tipo de contenido</label>
+      <div class="content-type-tabs">
+        <button class="ctype-tab active" onclick="setCType('texto',this)">📝 Texto</button>
+        <button class="ctype-tab" onclick="setCType('imagen',this)">🖼️ Imagen</button>
+        <button class="ctype-tab" onclick="setCType('audio',this)">🎵 Audio</button>
+        <button class="ctype-tab" onclick="setCType('video',this)">🎬 Video</button>
+        <button class="ctype-tab" onclick="setCType('documento',this)">📄 Documento</button>
+        <button class="ctype-tab" onclick="setCType('enlace',this)">🔗 Enlace</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Título *</label>
+      <input type="text" id="post-title-input" class="form-input" placeholder="¿Sobre qué escribís?" maxlength="120">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Proyecto / Sección *</label>
+      <select id="post-cat-input" class="form-select"><option value="">Elegir proyecto…</option></select>
+    </div>
+    <div id="ctype-texto" class="form-group">
+      <label class="form-label">Contenido</label>
+      <textarea id="post-body-input" class="form-textarea" placeholder="Escribí tu publicación acá…" style="min-height:180px" maxlength="5000"></textarea>
+    </div>
+    <div id="ctype-file" style="display:none" class="form-group">
+      <label class="form-label" id="file-label">Subir archivo</label>
+      <div class="info-msg" style="font-size:12px;margin-bottom:8px">☁️ El archivo se sube a Firebase Storage — disponible desde cualquier dispositivo.</div>
+      <div class="file-upload-area" id="drop-zone">
+        <input type="file" id="file-input" onchange="handleFile(this)">
+        <div class="file-upload-icon" id="upload-icon">📁</div>
+        <div class="file-upload-text">Hacé clic o arrastrá el archivo acá</div>
+        <div class="file-upload-hint" id="upload-hint">Formatos aceptados</div>
+      </div>
+      <div id="file-preview-area"></div>
+      <div id="upload-progress-wrap" class="upload-progress-wrap" style="display:none">
+        <div class="upload-progress-label"><span>Subiendo archivo…</span><span id="upload-pct">0%</span></div>
+        <div class="upload-progress-bar"><div class="upload-progress-fill" id="upload-progress-fill" style="width:0%"></div></div>
+      </div>
+      <label class="form-label" style="margin-top:12px">Descripción (opcional)</label>
+      <textarea id="file-caption" class="form-textarea" placeholder="Agregá una descripción…" style="min-height:80px" maxlength="500"></textarea>
+    </div>
+    <div id="ctype-enlace" style="display:none" class="form-group">
+      <label class="form-label">URL del enlace *</label>
+      <input type="url" id="post-link-input" class="form-input" placeholder="https://…" maxlength="500">
+      <label class="form-label" style="margin-top:12px">Descripción (opcional)</label>
+      <textarea id="link-desc" class="form-textarea" placeholder="¿De qué trata este enlace?" style="min-height:80px" maxlength="500"></textarea>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
+      <button class="btn-primary" onclick="submitPost()" id="btn-submit-post">💾 Publicar</button>
+      <button class="btn-secondary" onclick="goHome()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== POST READ ========== -->
+<div id="view-post" class="view">
+  <div class="post-full">
+    <button class="back-btn" onclick="goHome()" style="margin-bottom:24px">← Volver al blog</button>
+    <div class="post-full-header">
+      <div id="pf-category" class="post-full-category"></div>
+      <h1 id="pf-title"></h1>
+      <div class="post-meta">
+        <span id="pf-author"></span><span>·</span>
+        <span id="pf-date"></span><span id="pf-ctype-badge"></span>
+      </div>
+    </div>
+    <div id="pf-body" class="post-full-body"></div>
+    <div id="pf-media"></div>
+    <div class="edit-actions" id="pf-edit-actions" style="display:none">
+      <button class="btn-primary" onclick="editCurrentPost()" style="font-size:14px;padding:10px 20px">✏️ Editar</button>
+      <button class="btn-sm btn-danger" onclick="deleteCurrentPost()">🗑 Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ADMIN ========== -->
+<div id="view-admin" class="view">
+  <div class="section">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap">
+      <button class="back-btn" onclick="goHome()">← Volver</button>
+      <div>
+        <div class="section-title">⚙️ Panel de administración</div>
+        <div class="section-sub">Gestioná alumnos, publicaciones y proyectos</div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="a-stat-students" style="color:var(--teal)">0</div><div class="stat-label">Alumnos registrados</div></div>
+      <div class="stat-card"><div class="stat-num" id="a-stat-slots" style="color:var(--green)">35</div><div class="stat-label">Lugares disponibles</div></div>
+      <div class="stat-card"><div class="stat-num" id="a-stat-posts" style="color:var(--purple)">0</div><div class="stat-label">Publicaciones</div></div>
+      <div class="stat-card"><div class="stat-num" id="a-stat-sections" style="color:var(--sun)">0</div><div class="stat-label">Proyectos activos</div></div>
+    </div>
+    <div class="admin-panel" style="margin-bottom:28px">
+      <div class="admin-panel-header">
+        <h3>🔐 Seguridad</h3>
+        <button class="btn-primary" onclick="openChangePass()" style="font-size:14px;padding:10px 20px">🔑 Cambiar contraseña</button>
+      </div>
+      <div style="padding:20px 24px"><p style="font-size:14px;color:var(--muted)">Cambiá la contraseña de administración regularmente.</p></div>
+    </div>
+    <div class="admin-panel" style="margin-bottom:28px">
+      <div class="admin-panel-header">
+        <h3>📂 Proyectos / Secciones</h3>
+        <button class="btn-primary" onclick="openAddSection()" style="font-size:14px;padding:10px 20px">+ Nuevo proyecto</button>
+      </div>
+      <div style="padding:20px 24px">
+        <div id="sections-pills"></div>
+      </div>
+    </div>
+    <div class="admin-panel" style="margin-bottom:28px">
+      <div class="admin-panel-header">
+        <h3>👥 Alumnos del grado</h3>
+        <button class="btn-primary" onclick="openAddStudent()" style="font-size:14px;padding:10px 20px">+ Agregar alumno</button>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>#</th><th>Nombre completo</th><th>Estado</th><th>Publicaciones</th><th>Acciones</th></tr></thead>
+        <tbody id="students-tbody"></tbody></table>
+      </div>
+    </div>
+    <div class="admin-panel">
+      <div class="admin-panel-header"><h3>📰 Publicaciones</h3></div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Título</th><th>Tipo</th><th>Autor</th><th>Proyecto</th><th>Fecha</th><th></th></tr></thead>
+        <tbody id="admin-posts-tbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODALS ========== -->
+<!-- LOGIN -->
+<div class="overlay" id="overlay-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLogin()">×</button>
+    <div class="modal-title">👋 Ingresar al blog</div>
+    <div class="modal-sub">Escribí tu nombre tal como aparece en la lista</div>
+    <div id="login-error" class="error-msg"></div>
+    <div class="form-group"><label class="form-label">Nombre</label><input type="text" id="login-nombre" class="form-input" placeholder="Nombre" autocomplete="given-name"></div>
+    <div class="form-group"><label class="form-label">Apellido</label><input type="text" id="login-apellido" class="form-input" placeholder="Apellido" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-primary" style="width:100%" onclick="doLogin()">Entrar al blog →</button>
+    <div style="margin-top:16px;text-align:center">
+      <button style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif;text-decoration:underline" onclick="openAdminLogin()">Soy la maestra →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="overlay" id="overlay-admin-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAdminLogin()">×</button>
+    <div class="modal-title">🔐 Acceso de maestra</div>
+    <div class="modal-sub">Ingresá la contraseña de administración</div>
+    <div id="admin-login-error" class="error-msg"></div>
+    <div class="form-group"><label class="form-label">Contraseña</label>
+    <input type="password" id="admin-password" class="form-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
+    <button class="btn-primary" style="width:100%" onclick="doAdminLogin()">Ingresar como maestra</button>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD -->
+<div class="overlay" id="overlay-change-pass">
+  <div class="modal">
+    <button class="modal-close" onclick="closeChangePass()">×</button>
+    <div class="modal-title">🔑 Cambiar contraseña</div>
+    <div class="modal-sub">Elegí una contraseña segura que solo vos conozcas</div>
+    <div id="change-pass-error" class="error-msg"></div>
+    <div id="change-pass-success" class="success-msg"></div>
+    <div class="form-group"><label class="form-label">Contraseña actual</label><input type="password" id="cp-current" class="form-input" placeholder="••••••••"></div>
+    <div class="form-group"><label class="form-label">Nueva contraseña</label><input type="password" id="cp-new" class="form-input" placeholder="Mínimo 8 caracteres" oninput="checkPassStrength(this.value)">
+    <div class="pass-strength" id="pass-strength-msg"></div></div>
+    <div class="form-group"><label class="form-label">Repetir nueva contraseña</label><input type="password" id="cp-confirm" class="form-input" onkeydown="if(event.key==='Enter')doChangePass()"></div>
+    <button class="btn-primary" style="width:100%" onclick="doChangePass()">Guardar nueva contraseña</button>
+  </div>
+</div>
+
+<!-- ADD STUDENT -->
+<div class="overlay" id="overlay-add-student">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAddStudent()">×</button>
+    <div class="modal-title" id="add-student-modal-title">➕ Agregar alumno</div>
+    <div class="modal-sub">Completá el nombre completo</div>
+    <div id="add-student-error" class="error-msg"></div>
+    <div id="add-student-success" class="success-msg"></div>
+    <div class="form-group"><label class="form-label">Nombre</label><input type="text" id="new-student-nombre" class="form-input" placeholder="Nombre"></div>
+    <div class="form-group"><label class="form-label">Apellido</label><input type="text" id="new-student-apellido" class="form-input" placeholder="Apellido" onkeydown="if(event.key==='Enter')saveStudent()"></div>
+    <button class="btn-primary" style="width:100%" id="btn-save-student" onclick="saveStudent()">Guardar</button>
+  </div>
+</div>
+
+<!-- ADD SECTION -->
+<div class="overlay" id="overlay-add-section">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAddSection()">×</button>
+    <div class="modal-title">📂 Nuevo proyecto</div>
+    <div class="modal-sub">Agregá un proyecto o sección al blog</div>
+    <div id="add-section-error" class="error-msg"></div>
+    <div id="add-section-success" class="success-msg"></div>
+    <div class="form-group">
+      <label class="form-label">Emoji del proyecto</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px" id="emoji-picker">
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="💧" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">💧</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="📰" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">📰</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🌈" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🌈</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🏗️" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🏗️</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🔬" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🔬</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🎨" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🎨</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🎵" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🎵</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="📚" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">📚</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="⭐" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">⭐</span>
+        <span class="emoji-opt" onclick="selectEmoji(this)" data-e="🌍" style="font-size:26px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent">🌍</span>
+      </div>
+      <input type="text" id="section-emoji-input" class="form-input" placeholder="O escribí un emoji personalizado" maxlength="4">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nombre del proyecto *</label>
+      <input type="text" id="new-section-name" class="form-input" placeholder="Ej: Guardianes del Oro Azul" maxlength="60" onkeydown="if(event.key==='Enter')saveSection()">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="color-picker">
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#F0FDFA" data-color="#134E4A" data-border="#99F6E4" style="width:28px;height:28px;border-radius:50%;background:#0D9488;cursor:pointer;border:3px solid transparent"></span>
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#EFF6FF" data-color="#1E40AF" data-border="#BFDBFE" style="width:28px;height:28px;border-radius:50%;background:#3B82F6;cursor:pointer;border:3px solid transparent"></span>
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#F5F3FF" data-color="#4C1D95" data-border="#DDD6FE" style="width:28px;height:28px;border-radius:50%;background:#8B5CF6;cursor:pointer;border:3px solid transparent"></span>
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#FFF1F2" data-color="#9F1239" data-border="#FECDD3" style="width:28px;height:28px;border-radius:50%;background:#F43F5E;cursor:pointer;border:3px solid transparent"></span>
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#FFFBEB" data-color="#78350F" data-border="#FDE68A" style="width:28px;height:28px;border-radius:50%;background:#F59E0B;cursor:pointer;border:3px solid transparent"></span>
+        <span class="color-opt" onclick="selectColor(this)" data-bg="#ECFDF5" data-color="#065F46" data-border="#A7F3D0" style="width:28px;height:28px;border-radius:50%;background:#10B981;cursor:pointer;border:3px solid transparent"></span>
+      </div>
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="saveSection()">Crear proyecto</button>
+  </div>
+</div>
+
+<footer>
+  <p>Blog de 5° Grado · Amigos de Hugo Leonelli · Hecho con ❤️ para aprender juntos · 2026</p>
+</footer>
+
+
+<script type="module">
+// ========== FIREBASE MODULAR SDK ==========
+import { initializeApp }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc,
+         addDoc, setDoc, updateDoc, deleteDoc,
+         query, orderBy, onSnapshot }               from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref as storageRef,
+         uploadBytesResumable, getDownloadURL,
+         deleteObject }                             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDe3V2Uu2f6ETaKX03n5LLWJclnF0a8LdE",
+  authDomain:        "blog-educativo-c8d35.firebaseapp.com",
+  projectId:         "blog-educativo-c8d35",
+  storageBucket:     "blog-educativo-c8d35.firebasestorage.app",
+  messagingSenderId: "974003847315",
+  appId:             "1:974003847315:web:ce6d5639d51c67d6bb0d66"
+};
+const app     = initializeApp(firebaseConfig);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+
+// ========== CONSTANTS ==========
+const MAX_STUDENTS   = 35;
+const POSTS_PER_PAGE = 9;
+const DEFAULT_SECTIONS = [
+  {id:'s1',name:'Guardianes del Oro Azul',  emoji:'💧',bg:'#F0FDFA',color:'#134E4A',border:'#99F6E4'},
+  {id:'s2',name:'Periodistas del Oro Azul', emoji:'📰',bg:'#EFF6FF',color:'#1E40AF',border:'#BFDBFE'},
+  {id:'s3',name:'Construyendo Ilusiones',   emoji:'🏗️',bg:'#FFFBEB',color:'#78350F',border:'#FDE68A'},
+  {id:'s4',name:'Más Allá del Arcoíris',    emoji:'🌈',bg:'#F5F3FF',color:'#4C1D95',border:'#DDD6FE'},
+];
+
+// ========== STATE ==========
+let state = {
+  currentUser:null, students:[], posts:[], sections:[],
+  editingPostId:null, editingStudentId:null, filterCategory:'all',
+  currentPostId:null, currentCType:'texto',
+  uploadedFile:null, uploadedFileUrl:null, currentPage:1,
+};
+let _adminPassHash = null;
+
+// ========== HELPERS ==========
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+const COLORS=['#3B82F6','#8B5CF6','#0D9488','#F59E0B','#F43F5E','#06B6D4','#84CC16','#EC4899'];
+function studentColor(id){ let n=0;for(const c of(id||''))n+=c.charCodeAt(0);return COLORS[n%COLORS.length]; }
+function initials(n,a){ return((n||'')[0]||'').toUpperCase()+((a||'')[0]||'').toUpperCase(); }
+function getSecByName(name){ return state.sections.find(s=>s.name===name); }
+function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function formatDate(ts){ return new Date(ts).toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'}); }
+function showErr(el,msg){ el.textContent=msg;el.style.display='block'; }
+function safeUrl(url){
+  try{ const u=new URL(url);if(u.protocol==='http:'||u.protocol==='https:')return u.href; }catch(e){}return '#';
+}
+const CTYPE_LABELS={texto:'📝 Texto',imagen:'🖼️ Imagen',audio:'🎵 Audio',video:'🎬 Video',documento:'📄 Documento',enlace:'🔗 Enlace'};
+const FILE_HINTS={imagen:'JPG, PNG, GIF, WebP (máx. 10 MB)',audio:'MP3, WAV, OGG (máx. 50 MB)',video:'MP4, WebM (máx. 200 MB)',documento:'PDF, DOC, DOCX, PPT, XLS, TXT (máx. 20 MB)'};
+const FILE_ACCEPTS={imagen:'image/*',audio:'audio/*',video:'video/*',documento:'.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt'};
+const FILE_MAX_MB={imagen:10,audio:50,video:200,documento:20};
+
+// ========== SHA-256 ==========
+async function sha256(msg){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ========== TOAST ==========
+function showToast(msg,type='',dur=3500){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;c.appendChild(t);
+  setTimeout(()=>{t.style.animation='toastOut .3s ease forwards';setTimeout(()=>t.remove(),300);},dur);
+}
+
+// ========== LOADING ==========
+function showLoading(v=true,txt='Cargando…'){
+  const el=document.getElementById('loading-overlay');
+  el.classList.toggle('hidden',!v);
+  if(v) document.getElementById('loading-text').textContent=txt;
+}
+
+// ========== FIREBASE STATUS ==========
+function setFbStatus(s){
+  const badge=document.getElementById('fb-status-badge');
+  const text=document.getElementById('fb-status-text');
+  badge.className='fb-status '+s;
+  text.textContent=s==='online'?'Conectado':s==='offline'?'Sin conexión':'Conectando…';
+}
+
+// ========== SESSION ==========
+function loadSession(){
+  try{const s=sessionStorage.getItem('blog5leo_sess');if(s){state.currentUser=JSON.parse(s);afterLogin(true);}}catch(e){}
+}
+function saveSession(){ try{sessionStorage.setItem('blog5leo_sess',JSON.stringify(state.currentUser));}catch(e){} }
+function clearSession(){ try{sessionStorage.removeItem('blog5leo_sess');}catch(e){} }
+
+// ========== FIRESTORE LISTENERS ==========
+function startListeners(){
+  // Posts
+  onSnapshot(query(collection(db,'posts'),orderBy('date','desc')), snap=>{
+    state.posts=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderHome();
+    if(document.getElementById('view-admin').classList.contains('active')) renderAdmin();
+    setFbStatus('online');
+  }, ()=>setFbStatus('offline'));
+
+  // Students
+  onSnapshot(query(collection(db,'students'),orderBy('apellido')), snap=>{
+    state.students=snap.docs.map(d=>({id:d.id,...d.data()}));
+    document.getElementById('stat-students').textContent=state.students.length;
+    if(document.getElementById('view-admin').classList.contains('active')) renderAdmin();
+  });
+
+  // Sections
+  onSnapshot(query(collection(db,'sections'),orderBy('order')), async snap=>{
+    if(snap.empty){
+      // Sembrar secciones por defecto la primera vez
+      for(let i=0;i<DEFAULT_SECTIONS.length;i++){
+        const s=DEFAULT_SECTIONS[i];
+        await setDoc(doc(db,'sections',s.id),{...s,order:i});
+      }
+    } else {
+      state.sections=snap.docs.map(d=>({id:d.id,...d.data()}));
+      renderCategoryTabs();
+      populateCatSelect();
+    }
+  });
+
+  // Config (hash de contraseña)
+  onSnapshot(doc(db,'config','admin'), snap=>{
+    if(snap.exists()) _adminPassHash=snap.data().passHash||null;
+  });
+}
+
+// ========== CRUD POSTS ==========
+async function fbSavePost(postData){
+  if(state.editingPostId){
+    await updateDoc(doc(db,'posts',state.editingPostId),postData);
+  } else {
+    await addDoc(collection(db,'posts'),{
+      ...postData,
+      authorId:state.currentUser.id,
+      authorName:state.currentUser.name,
+      date:Date.now()
+    });
+  }
+}
+async function fbDeletePost(id){
+  const post=state.posts.find(p=>p.id===id);
+  if(post&&post.fileStoragePath){
+    try{await deleteObject(storageRef(storage,post.fileStoragePath));}catch(e){}
+  }
+  await deleteDoc(doc(db,'posts',id));
+}
+
+// ========== UPLOAD TO STORAGE ==========
+function uploadFile(file,postId){
+  return new Promise((resolve,reject)=>{
+    const ext=file.name.split('.').pop();
+    const path=`posts/${postId}/${uid()}.${ext}`;
+    const sref=storageRef(storage,path);
+    const task=uploadBytesResumable(sref,file);
+    const wrap=document.getElementById('upload-progress-wrap');
+    const fill=document.getElementById('upload-progress-fill');
+    const pct=document.getElementById('upload-pct');
+    if(wrap) wrap.style.display='block';
+    task.on('state_changed',
+      snap=>{
+        const p=Math.round(snap.bytesTransferred/snap.totalBytes*100);
+        if(fill) fill.style.width=p+'%';
+        if(pct) pct.textContent=p+'%';
+      },
+      err=>reject(err),
+      async()=>{
+        const url=await getDownloadURL(task.snapshot.ref);
+        if(wrap) wrap.style.display='none';
+        resolve({url,path});
+      }
+    );
+  });
+}
+
+// ========== CRUD STUDENTS ==========
+async function fbSaveStudent(nombre,apellido,id=null){
+  if(id){ await updateDoc(doc(db,'students',id),{nombre,apellido}); }
+  else  { await addDoc(collection(db,'students'),{nombre,apellido}); }
+}
+async function fbDeleteStudent(id){ await deleteDoc(doc(db,'students',id)); }
+
+// ========== CRUD SECTIONS ==========
+async function fbSaveSection(sec){
+  await setDoc(doc(db,'sections',sec.id),{...sec,order:state.sections.length});
+}
+async function fbDeleteSection(id){ await deleteDoc(doc(db,'sections',id)); }
+
+// ========== ADMIN PASSWORD ==========
+async function fbSavePassHash(hash){
+  await setDoc(doc(db,'config','admin'),{passHash:hash},{merge:true});
+}
+
+// ========== NAVIGATION ==========
+function showView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goHome(){ renderCategoryTabs();state.currentPage=1;renderHome();showView('home'); }
+function goWrite(){
+  if(!state.currentUser){openLogin();return;}
+  state.editingPostId=null;state.uploadedFile=null;state.uploadedFileUrl=null;
+  document.getElementById('write-title').textContent='✏️ Nueva publicación';
+  ['post-title-input','post-body-input','file-caption','post-link-input','link-desc']
+    .forEach(id=>document.getElementById(id).value='');
+  document.getElementById('file-preview-area').innerHTML='';
+  document.getElementById('upload-progress-wrap').style.display='none';
+  document.getElementById('write-error').style.display='none';
+  document.getElementById('btn-submit-post').textContent='💾 Publicar';
+  populateCatSelect();
+  setCType('texto',document.querySelector('.ctype-tab'));
+  showView('write');
+}
+function goAdmin(){ renderAdmin();showView('admin'); }
+function goRecursos(){ showView('recursos'); }
+function scrollToPosts(){ document.getElementById('posts-section').scrollIntoView({behavior:'smooth'}); }
+function handlePublicarClick(){
+  if(!state.currentUser) openLogin();
+  else if(state.currentUser.isAdmin) goAdmin();
+  else goWrite();
+}
+
+// ========== CATEGORY TABS ==========
+function renderCategoryTabs(){
+  document.getElementById('category-tabs').innerHTML=[
+    `<div class="tab ${state.filterCategory==='all'?'active':''}" onclick="w.filterPosts('all',this)">Todas</div>`,
+    ...state.sections.map(s=>`<div class="tab ${state.filterCategory===s.name?'active':''}" onclick="w.filterPosts('${esc(s.name)}',this)">${s.emoji} ${esc(s.name)}</div>`)
+  ].join('');
+}
+function populateCatSelect(){
+  document.getElementById('post-cat-input').innerHTML='<option value="">Elegir proyecto…</option>'+
+    state.sections.map(s=>`<option value="${esc(s.name)}">${s.emoji} ${esc(s.name)}</option>`).join('');
+}
+
+// ========== AUTH ==========
+function openLogin(){
+  document.getElementById('login-nombre').value='';
+  document.getElementById('login-apellido').value='';
+  document.getElementById('login-error').style.display='none';
+  document.getElementById('overlay-login').classList.add('open');
+  setTimeout(()=>document.getElementById('login-nombre').focus(),100);
+}
+function closeLogin(){ document.getElementById('overlay-login').classList.remove('open'); }
+function openAdminLogin(){
+  closeLogin();
+  document.getElementById('admin-password').value='';
+  document.getElementById('admin-login-error').style.display='none';
+  document.getElementById('overlay-admin-login').classList.add('open');
+  setTimeout(()=>document.getElementById('admin-password').focus(),100);
+}
+function closeAdminLogin(){ document.getElementById('overlay-admin-login').classList.remove('open'); }
+
+function doLogin(){
+  const n=document.getElementById('login-nombre').value.trim();
+  const a=document.getElementById('login-apellido').value.trim();
+  const err=document.getElementById('login-error');
+  if(!n||!a){showErr(err,'Escribí tu nombre y apellido.');return;}
+  const found=state.students.find(s=>s.nombre.toLowerCase()===n.toLowerCase()&&s.apellido.toLowerCase()===a.toLowerCase());
+  if(!found){showErr(err,'No encontramos ese nombre. Pedile a tu maestra que te registre.');return;}
+  state.currentUser={id:found.id,name:found.nombre+' '+found.apellido,isAdmin:false};
+  saveSession();closeLogin();afterLogin();
+  showToast('¡Bienvenido/a, '+found.nombre+'! 🎉','success');
+}
+async function doAdminLogin(){
+  const p=document.getElementById('admin-password').value;
+  const err=document.getElementById('admin-login-error');
+  if(!p){showErr(err,'Ingresá la contraseña.');return;}
+  const hash=await sha256(p);
+  const defaultHash=await sha256('maestra2025');
+  if(hash!==_adminPassHash&&!(_adminPassHash===null&&hash===defaultHash)){
+    showErr(err,'Contraseña incorrecta.');return;
+  }
+  state.currentUser={id:'admin',name:'Maestra',isAdmin:true};
+  saveSession();closeAdminLogin();afterLogin();goAdmin();
+  showToast('Bienvenida, maestra 👩‍🏫','success');
+}
+function afterLogin(restore=false){
+  const u=state.currentUser;
+  document.getElementById('badge-name').textContent=u.name;
+  document.getElementById('badge-avatar').textContent=u.isAdmin?'👩‍🏫':'👤';
+  document.getElementById('user-badge').classList.add('visible');
+  document.getElementById('btn-login-header').style.display='none';
+  document.getElementById('btn-logout-header').style.display='';
+  document.getElementById('btn-write').style.display='';
+  if(u.isAdmin){
+    document.getElementById('btn-write').textContent='⚙️ Administrar';
+    document.getElementById('btn-write').onclick=goAdmin;
+  } else {
+    document.getElementById('btn-write').textContent='✏️ Nueva publicación';
+    document.getElementById('btn-write').onclick=goWrite;
+  }
+  if(!restore) goHome();
+}
+function logout(){
+  state.currentUser=null;clearSession();
+  document.getElementById('user-badge').classList.remove('visible');
+  document.getElementById('btn-login-header').style.display='';
+  document.getElementById('btn-logout-header').style.display='none';
+  document.getElementById('btn-write').style.display='none';
+  goHome();showToast('Sesión cerrada','');
+}
+
+// ========== CHANGE PASSWORD ==========
+function openChangePass(){
+  ['cp-current','cp-new','cp-confirm'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('change-pass-error').style.display='none';
+  document.getElementById('change-pass-success').style.display='none';
+  document.getElementById('pass-strength-msg').textContent='';
+  document.getElementById('overlay-change-pass').classList.add('open');
+}
+function closeChangePass(){ document.getElementById('overlay-change-pass').classList.remove('open'); }
+function checkPassStrength(val){
+  const el=document.getElementById('pass-strength-msg');
+  if(!val){el.textContent='';return;}
+  if(val.length<8){el.className='pass-strength weak';el.textContent='Muy corta (mínimo 8 caracteres)';}
+  else if(val.length<12||!/[0-9]/.test(val)||!/[A-Za-z]/.test(val)){el.className='pass-strength medium';el.textContent='Media – agregá números y letras';}
+  else{el.className='pass-strength strong';el.textContent='✓ Contraseña fuerte';}
+}
+async function doChangePass(){
+  const current=document.getElementById('cp-current').value;
+  const newPass=document.getElementById('cp-new').value;
+  const confirm=document.getElementById('cp-confirm').value;
+  const err=document.getElementById('change-pass-error');
+  const suc=document.getElementById('change-pass-success');
+  err.style.display='none';suc.style.display='none';
+  if(!current||!newPass||!confirm){showErr(err,'Completá todos los campos.');return;}
+  if(newPass.length<8){showErr(err,'Mínimo 8 caracteres.');return;}
+  if(newPass!==confirm){showErr(err,'Las contraseñas no coinciden.');return;}
+  const currentHash=await sha256(current);
+  const defaultHash=await sha256('maestra2025');
+  if(currentHash!==_adminPassHash&&!(_adminPassHash===null&&currentHash===defaultHash)){
+    showErr(err,'La contraseña actual no es correcta.');return;
+  }
+  const newHash=await sha256(newPass);
+  await fbSavePassHash(newHash);
+  _adminPassHash=newHash;
+  suc.textContent='✅ Contraseña cambiada exitosamente.';suc.style.display='block';
+  setTimeout(closeChangePass,1500);
+  showToast('Contraseña actualizada 🔐','success');
+}
+
+// ========== CONTENT TYPE ==========
+function setCType(type,el){
+  state.currentCType=type;
+  document.querySelectorAll('.ctype-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('ctype-texto').style.display=(type==='texto')?'':'none';
+  document.getElementById('ctype-file').style.display=(['imagen','audio','video','documento'].includes(type))?'':'none';
+  document.getElementById('ctype-enlace').style.display=(type==='enlace')?'':'none';
+  if(['imagen','audio','video','documento'].includes(type)){
+    document.getElementById('upload-hint').textContent=FILE_HINTS[type]||'';
+    document.getElementById('upload-icon').textContent=type==='imagen'?'🖼️':type==='audio'?'🎵':type==='video'?'🎬':'📄';
+    document.getElementById('file-input').accept=FILE_ACCEPTS[type]||'*/*';
+    state.uploadedFile=null;state.uploadedFileUrl=null;
+    document.getElementById('file-preview-area').innerHTML='';
+  }
+}
+function handleFile(input){
+  const file=input.files[0];if(!file)return;
+  const maxMB=FILE_MAX_MB[state.currentCType]||20;
+  if(file.size>maxMB*1024*1024){showToast(`Máximo ${maxMB} MB para este tipo.`,'warning',5000);input.value='';return;}
+  state.uploadedFile={name:file.name,type:file.type,file};
+  const icon=file.type.startsWith('image/')?'🖼️':file.type.startsWith('audio/')?'🎵':file.type.startsWith('video/')?'🎬':'📄';
+  const sizeMB=(file.size/1024/1024).toFixed(1);
+  document.getElementById('file-preview-area').innerHTML=
+    `<div class="file-preview"><span class="file-icon">${icon}</span><span class="file-name">${esc(file.name)}</span><span style="color:var(--muted);font-size:12px;flex-shrink:0">${sizeMB} MB</span><button class="remove-file" onclick="w.removeFile()">×</button></div>`;
+}
+function removeFile(){
+  state.uploadedFile=null;state.uploadedFileUrl=null;
+  document.getElementById('file-input').value='';
+  document.getElementById('file-preview-area').innerHTML='';
+}
+
+// ========== RENDER HOME ==========
+function renderHome(){
+  document.getElementById('stat-posts').textContent=state.posts.length;
+  document.getElementById('stat-authors').textContent=new Set(state.posts.map(p=>p.authorId)).size;
+  document.getElementById('stat-students').textContent=state.students.length;
+  renderPosts(state.filterCategory);
+}
+function filterPosts(cat,el){
+  state.filterCategory=cat;state.currentPage=1;
+  document.querySelectorAll('#category-tabs .tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderPosts(cat);
+}
+function renderPosts(cat){
+  const container=document.getElementById('posts-container');
+  const paginationEl=document.getElementById('pagination');
+  let posts=[...state.posts];
+  if(cat!=='all') posts=posts.filter(p=>p.category===cat);
+  if(!posts.length){
+    container.innerHTML=`<div class="empty-state"><div class="emoji">📭</div><h3>¡Nadie escribió todavía!</h3><p>Sé el primero en compartir algo de este proyecto.</p>${state.currentUser&&!state.currentUser.isAdmin?'<button class="btn-primary" onclick="w.goWrite()">✏️ Escribir ahora</button>':''}</div>`;
+    paginationEl.innerHTML='';return;
+  }
+  const totalPages=Math.ceil(posts.length/POSTS_PER_PAGE);
+  if(state.currentPage>totalPages) state.currentPage=totalPages;
+  const start=(state.currentPage-1)*POSTS_PER_PAGE;
+  container.innerHTML=`<div class="posts-grid">${posts.slice(start,start+POSTS_PER_PAGE).map(postCard).join('')}</div>`;
+  if(totalPages<=1){paginationEl.innerHTML='';return;}
+  let ph=`<button class="page-btn" onclick="w.changePage(${state.currentPage-1})" ${state.currentPage===1?'disabled':''}>← Anterior</button>`;
+  for(let i=1;i<=totalPages;i++) ph+=`<button class="page-btn ${i===state.currentPage?'active':''}" onclick="w.changePage(${i})">${i}</button>`;
+  ph+=`<button class="page-btn" onclick="w.changePage(${state.currentPage+1})" ${state.currentPage===totalPages?'disabled':''}>Siguiente →</button>`;
+  paginationEl.innerHTML=ph;
+}
+function changePage(n){ state.currentPage=n;renderPosts(state.filterCategory);document.getElementById('posts-section').scrollIntoView({behavior:'smooth'}); }
+
+function postCard(post){
+  const sec=getSecByName(post.category)||{bg:'#F1F5F9',color:'#475569',border:'#E2E8F0',emoji:'📄'};
+  const color=studentColor(post.authorId);
+  const parts=(post.authorName||'').split(' ');
+  const ini=initials(parts[0],parts[1]);
+  const ctype=post.ctype||'texto';
+  let banner=`<span class="card-banner-emoji">${sec.emoji||'📄'}</span>`;
+  if(ctype==='imagen'&&post.fileUrl) banner=`<img class="card-banner-img" src="${esc(post.fileUrl)}" alt="imagen" loading="lazy"><span class="card-banner-emoji" style="opacity:0">.</span>`;
+  return `<div class="post-card" onclick="w.openPost('${esc(post.id)}')" role="article" tabindex="0" onkeydown="if(event.key==='Enter')w.openPost('${esc(post.id)}')">
+    <div class="card-banner" style="background:${sec.bg}">${banner}<span class="card-type-badge">${CTYPE_LABELS[ctype]||''}</span></div>
+    <div class="card-body">
+      <div class="card-category" style="background:${sec.bg};color:${sec.color}">${esc(post.category)}</div>
+      <div class="card-title">${esc(post.title)}</div>
+      <div class="card-excerpt">${esc((post.body||post.linkDesc||post.fileCaption||'').slice(0,90))}${(post.body||post.linkDesc||post.fileCaption||'').length>90?'…':''}</div>
+      <div class="card-footer">
+        <div class="card-author"><div class="avatar-mini" style="background:${color}">${ini}</div>${esc(post.authorName)}</div>
+        <span>${formatDate(post.date)}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ========== OPEN / EDIT / DELETE POST ==========
+function openPost(id){
+  const post=state.posts.find(p=>p.id===id);if(!post)return;
+  state.currentPostId=id;
+  const sec=getSecByName(post.category)||{bg:'#F1F5F9',color:'#475569',emoji:'📄'};
+  const color=studentColor(post.authorId);
+  const parts=(post.authorName||'').split(' ');
+  const ctype=post.ctype||'texto';
+  document.getElementById('pf-category').textContent=(sec.emoji||'')+' '+(post.category||'');
+  document.getElementById('pf-category').style.cssText=`background:${sec.bg};color:${sec.color}`;
+  document.getElementById('pf-title').textContent=post.title;
+  document.getElementById('pf-author').innerHTML=`<span style="display:inline-flex;align-items:center;gap:6px"><span class="avatar-mini" style="background:${color};display:inline-flex">${initials(parts[0],parts[1])}</span>${esc(post.authorName)}</span>`;
+  document.getElementById('pf-date').textContent=formatDate(post.date);
+  document.getElementById('pf-ctype-badge').textContent=' · '+(CTYPE_LABELS[ctype]||'');
+  const bodyEl=document.getElementById('pf-body');
+  bodyEl.textContent=post.body||'';bodyEl.style.display=post.body?'':'none';
+  let mediaHTML='';
+  if(ctype==='imagen'&&post.fileUrl){
+    mediaHTML=`<img src="${esc(post.fileUrl)}" class="post-image-full" alt="${esc(post.fileName||'imagen')}">`;
+    if(post.fileCaption) mediaHTML+=`<p style="font-size:14px;color:var(--muted);margin-top:8px;font-style:italic">${esc(post.fileCaption)}</p>`;
+  } else if(ctype==='audio'&&post.fileUrl){
+    mediaHTML=`<div class="post-attachment"><div class="post-attachment-title">Archivo de audio</div><audio controls class="post-audio" src="${esc(post.fileUrl)}"></audio>${post.fileCaption?`<p style="font-size:14px;color:var(--muted);margin-top:8px">${esc(post.fileCaption)}</p>`:''}</div>`;
+  } else if(ctype==='video'&&post.fileUrl){
+    mediaHTML=`<div class="post-attachment"><video controls class="post-video" src="${esc(post.fileUrl)}"></video>${post.fileCaption?`<p style="font-size:14px;color:var(--muted);margin-top:8px">${esc(post.fileCaption)}</p>`:''}</div>`;
+  } else if(ctype==='documento'&&post.fileUrl){
+    mediaHTML=`<div class="post-attachment"><div class="post-attachment-title">Documento adjunto</div><div class="attachment-card" onclick="window.open('${esc(post.fileUrl)}','_blank','noopener,noreferrer')"><span class="att-icon">📄</span><div class="att-info"><div class="att-name">${esc(post.fileName||'documento')}</div><div class="att-type">Clic para abrir / descargar</div></div><span style="font-size:20px">⬇️</span></div>${post.fileCaption?`<p style="font-size:14px;color:var(--muted);margin-top:10px">${esc(post.fileCaption)}</p>`:''}</div>`;
+  } else if(ctype==='enlace'&&post.link){
+    const safe=safeUrl(post.link);
+    mediaHTML=`<div class="post-attachment"><div class="post-attachment-title">Enlace</div><div class="attachment-card" onclick="window.open(${JSON.stringify(safe)},'_blank','noopener,noreferrer')"><span class="att-icon">🔗</span><div class="att-info"><div class="att-name">${esc(post.link.slice(0,60))}</div><div class="att-type">${esc(post.linkDesc||'Abrir enlace')}</div></div><span style="font-size:20px">↗️</span></div></div>`;
+  }
+  document.getElementById('pf-media').innerHTML=mediaHTML;
+  const canEdit=state.currentUser&&(state.currentUser.isAdmin||state.currentUser.id===post.authorId);
+  document.getElementById('pf-edit-actions').style.display=canEdit?'flex':'none';
+  showView('post');
+}
+function editCurrentPost(){
+  const post=state.posts.find(p=>p.id===state.currentPostId);if(!post)return;
+  state.editingPostId=post.id;state.uploadedFile=null;state.uploadedFileUrl=post.fileUrl||null;
+  populateCatSelect();
+  document.getElementById('write-title').textContent='✏️ Editar publicación';
+  document.getElementById('post-title-input').value=post.title;
+  document.getElementById('post-cat-input').value=post.category;
+  document.getElementById('post-body-input').value=post.body||'';
+  document.getElementById('post-link-input').value=post.link||'';
+  document.getElementById('link-desc').value=post.linkDesc||'';
+  document.getElementById('file-caption').value=post.fileCaption||'';
+  document.getElementById('write-error').style.display='none';
+  document.getElementById('btn-submit-post').textContent='💾 Guardar cambios';
+  const ctype=post.ctype||'texto';
+  const ctypeEl=Array.from(document.querySelectorAll('.ctype-tab')).find(el=>el.getAttribute('onclick')&&el.getAttribute('onclick').includes("'"+ctype+"'"));
+  setCType(ctype,ctypeEl);
+  if(post.fileUrl){
+    document.getElementById('file-preview-area').innerHTML=`<div class="file-preview"><span class="file-icon">📁</span><span class="file-name">${esc(post.fileName||'archivo')}</span><span style="font-size:12px;color:var(--teal);flex-shrink:0">☁️ ya subido</span></div>`;
+  }
+  showView('write');
+}
+async function deleteCurrentPost(){
+  if(!confirm('¿Seguro que querés eliminar esta publicación?'))return;
+  showLoading(true,'Eliminando…');
+  try{await fbDeletePost(state.currentPostId);goHome();showToast('Publicación eliminada','');}
+  catch(e){showToast('Error al eliminar: '+e.message,'error');}
+  finally{showLoading(false);}
+}
+
+// ========== SUBMIT POST ==========
+async function submitPost(){
+  const title=document.getElementById('post-title-input').value.trim();
+  const cat=document.getElementById('post-cat-input').value;
+  const ctype=state.currentCType;
+  const body=document.getElementById('post-body-input').value.trim();
+  const link=document.getElementById('post-link-input').value.trim();
+  const linkDesc=document.getElementById('link-desc').value.trim();
+  const fileCaption=document.getElementById('file-caption').value.trim();
+  const err=document.getElementById('write-error');
+  err.style.display='none';
+  if(!title){showErr(err,'Poné un título.');return;}
+  if(!cat){showErr(err,'Elegí un proyecto.');return;}
+  if(ctype==='texto'&&!body){showErr(err,'Escribí algo en el contenido.');return;}
+  if(ctype==='enlace'&&!link){showErr(err,'Ingresá un enlace.');return;}
+  if(ctype==='enlace'&&safeUrl(link)==='#'){showErr(err,'El enlace debe comenzar con http:// o https://');return;}
+  const needsFile=['imagen','audio','video','documento'].includes(ctype);
+  if(needsFile&&!state.uploadedFile&&!state.uploadedFileUrl&&!state.editingPostId){showErr(err,'Seleccioná un archivo.');return;}
+  const btn=document.getElementById('btn-submit-post');
+  btn.disabled=true;btn.textContent='Guardando…';
+  showLoading(true,'Guardando publicación…');
+  try{
+    let fileUrl=state.uploadedFileUrl||null,fileName=null,fileStoragePath=null;
+    if(needsFile&&state.uploadedFile){
+      showLoading(true,'Subiendo archivo…');
+      const postId=state.editingPostId||uid();
+      const result=await uploadFile(state.uploadedFile.file,postId);
+      fileUrl=result.url;fileName=state.uploadedFile.name;fileStoragePath=result.path;
+    } else if(needsFile&&state.editingPostId){
+      const existing=state.posts.find(p=>p.id===state.editingPostId);
+      if(existing){fileName=existing.fileName||null;fileStoragePath=existing.fileStoragePath||null;}
+    }
+    await fbSavePost({
+      title,category:cat,ctype,
+      body:ctype==='texto'?body:'',
+      link:ctype==='enlace'?link:'',
+      linkDesc:ctype==='enlace'?linkDesc:'',
+      fileUrl:needsFile?fileUrl:null,
+      fileName:needsFile?fileName:null,
+      fileStoragePath:needsFile?fileStoragePath:null,
+      fileCaption:needsFile?fileCaption:'',
+    });
+    state.editingPostId=null;
+    goHome();showToast('¡Publicación guardada! 🎉','success');
+  }catch(e){
+    showErr(err,'Error al guardar: '+e.message);
+    showToast('Error: '+e.message,'error');
+  }finally{
+    btn.disabled=false;btn.textContent='💾 Publicar';
+    showLoading(false);
+  }
+}
+
+// ========== SECTIONS ==========
+let _selEmoji='💧';
+let _selColor={bg:'#F0FDFA',color:'#134E4A',border:'#99F6E4'};
+function openAddSection(){
+  document.getElementById('new-section-name').value='';
+  document.getElementById('section-emoji-input').value='';
+  document.getElementById('add-section-error').style.display='none';
+  document.getElementById('add-section-success').style.display='none';
+  _selEmoji='💧';_selColor={bg:'#F0FDFA',color:'#134E4A',border:'#99F6E4'};
+  document.querySelectorAll('.emoji-opt').forEach(e=>e.style.border='2px solid transparent');
+  document.querySelectorAll('.color-opt').forEach(c=>c.style.border='3px solid transparent');
+  document.getElementById('overlay-add-section').classList.add('open');
+}
+function closeAddSection(){ document.getElementById('overlay-add-section').classList.remove('open'); }
+function selectEmoji(el){
+  document.querySelectorAll('.emoji-opt').forEach(e=>e.style.border='2px solid transparent');
+  el.style.border='2px solid var(--teal)';_selEmoji=el.dataset.e;
+  document.getElementById('section-emoji-input').value='';
+}
+function selectColor(el){
+  document.querySelectorAll('.color-opt').forEach(c=>c.style.border='3px solid transparent');
+  el.style.border='3px solid var(--text)';
+  _selColor={bg:el.dataset.bg,color:el.dataset.color,border:el.dataset.border};
+}
+async function saveSection(){
+  const name=document.getElementById('new-section-name').value.trim();
+  const customEmoji=document.getElementById('section-emoji-input').value.trim();
+  const err=document.getElementById('add-section-error');
+  const suc=document.getElementById('add-section-success');
+  err.style.display='none';suc.style.display='none';
+  if(!name){showErr(err,'Ingresá el nombre del proyecto.');return;}
+  if(state.sections.find(s=>s.name.toLowerCase()===name.toLowerCase())){showErr(err,'Ya existe ese proyecto.');return;}
+  try{
+    await fbSaveSection({id:uid(),name,emoji:customEmoji||_selEmoji||'📂',bg:_selColor.bg,color:_selColor.color,border:_selColor.border});
+    suc.textContent=`✅ Proyecto "${name}" creado.`;suc.style.display='block';
+    document.getElementById('new-section-name').value='';
+    setTimeout(closeAddSection,1300);
+  }catch(e){showErr(err,'Error: '+e.message);}
+}
+async function removeSection(id){
+  const s=state.sections.find(sec=>sec.id===id);if(!s)return;
+  if(!confirm(`¿Eliminar el proyecto "${s.name}"?`))return;
+  try{await fbDeleteSection(id);showToast('Proyecto eliminado','');}
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+
+// ========== ADMIN ==========
+function renderAdmin(){
+  const sCount=state.students.length;
+  document.getElementById('a-stat-students').textContent=sCount;
+  document.getElementById('a-stat-slots').textContent=Math.max(0,MAX_STUDENTS-sCount);
+  document.getElementById('a-stat-posts').textContent=state.posts.length;
+  document.getElementById('a-stat-sections').textContent=state.sections.length;
+  document.getElementById('sections-pills').innerHTML=state.sections.map(s=>
+    `<span class="section-pill" style="background:${s.bg};color:${s.color};border-color:${s.border}">
+      ${s.emoji} ${esc(s.name)}
+      <button onclick="w.removeSection('${esc(s.id)}')">×</button>
+    </span>`
+  ).join('')||'<p style="color:var(--muted);font-size:14px">No hay proyectos.</p>';
+  const tbody=document.getElementById('students-tbody');
+  if(!state.students.length){
+    tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px">No hay alumnos registrados.</td></tr>`;
+  } else {
+    tbody.innerHTML=state.students.map((s,i)=>{
+      const pc=state.posts.filter(p=>p.authorId===s.id).length;
+      const color=studentColor(s.id);
+      return `<tr>
+        <td style="color:var(--muted)">${i+1}</td>
+        <td><div style="display:flex;align-items:center;gap:8px"><div class="avatar-mini" style="background:${color}">${initials(s.nombre,s.apellido)}</div>${esc(s.nombre)} ${esc(s.apellido)}</div></td>
+        <td><span class="badge badge-green">Activo</span></td>
+        <td><strong>${pc}</strong></td>
+        <td><div style="display:flex;gap:6px">
+          <button class="btn-sm btn-success" onclick="w.openEditStudent('${esc(s.id)}')">✏️</button>
+          <button class="btn-sm btn-danger" onclick="w.removeStudent('${esc(s.id)}')">🗑</button>
+        </div></td>
+      </tr>`;
+    }).join('');
+  }
+  const ptbody=document.getElementById('admin-posts-tbody');
+  if(!state.posts.length){
+    ptbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">Sin publicaciones.</td></tr>`;
+  } else {
+    ptbody.innerHTML=state.posts.map(p=>{
+      const s=getSecByName(p.category)||{bg:'#F1F5F9',color:'#475569'};
+      return `<tr>
+        <td style="font-weight:700">${esc(p.title)}</td>
+        <td>${CTYPE_LABELS[p.ctype||'texto']||''}</td>
+        <td>${esc(p.authorName)}</td>
+        <td><span class="badge" style="background:${s.bg};color:${s.color}">${esc(p.category)}</span></td>
+        <td style="color:var(--muted)">${formatDate(p.date)}</td>
+        <td><button class="btn-sm btn-danger" onclick="w.adminDeletePost('${esc(p.id)}')">🗑</button></td>
+      </tr>`;
+    }).join('');
+  }
+}
+async function adminDeletePost(id){
+  if(!confirm('¿Eliminar esta publicación?'))return;
+  try{await fbDeletePost(id);showToast('Eliminada','');}
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+
+// ========== STUDENT CRUD ==========
+function openAddStudent(){
+  state.editingStudentId=null;
+  document.getElementById('add-student-modal-title').textContent='➕ Agregar alumno';
+  document.getElementById('new-student-nombre').value='';
+  document.getElementById('new-student-apellido').value='';
+  document.getElementById('add-student-error').style.display='none';
+  document.getElementById('add-student-success').style.display='none';
+  document.getElementById('btn-save-student').textContent='Agregar alumno';
+  document.getElementById('overlay-add-student').classList.add('open');
+}
+function openEditStudent(id){
+  const s=state.students.find(st=>st.id===id);if(!s)return;
+  state.editingStudentId=id;
+  document.getElementById('add-student-modal-title').textContent='✏️ Editar alumno';
+  document.getElementById('new-student-nombre').value=s.nombre;
+  document.getElementById('new-student-apellido').value=s.apellido;
+  document.getElementById('add-student-error').style.display='none';
+  document.getElementById('add-student-success').style.display='none';
+  document.getElementById('btn-save-student').textContent='Guardar cambios';
+  document.getElementById('overlay-add-student').classList.add('open');
+}
+function closeAddStudent(){ document.getElementById('overlay-add-student').classList.remove('open'); }
+async function saveStudent(){
+  const n=document.getElementById('new-student-nombre').value.trim();
+  const a=document.getElementById('new-student-apellido').value.trim();
+  const err=document.getElementById('add-student-error');
+  const suc=document.getElementById('add-student-success');
+  err.style.display='none';suc.style.display='none';
+  if(!n||!a){showErr(err,'Completá nombre y apellido.');return;}
+  try{
+    if(state.editingStudentId){
+      await fbSaveStudent(n,a,state.editingStudentId);
+      suc.textContent=`✅ ${n} ${a} actualizado.`;suc.style.display='block';
+      setTimeout(closeAddStudent,1200);
+    } else {
+      if(state.students.find(s=>s.nombre.toLowerCase()===n.toLowerCase()&&s.apellido.toLowerCase()===a.toLowerCase())){showErr(err,'Ya existe ese alumno.');return;}
+      if(state.students.length>=MAX_STUDENTS){showErr(err,`Límite de ${MAX_STUDENTS} alumnos.`);return;}
+      await fbSaveStudent(n,a);
+      suc.textContent=`✅ ${n} ${a} agregado.`;suc.style.display='block';
+      document.getElementById('new-student-nombre').value='';
+      document.getElementById('new-student-apellido').value='';
+      setTimeout(()=>{suc.style.display='none';},1800);
+    }
+  }catch(e){showErr(err,'Error: '+e.message);}
+}
+async function removeStudent(id){
+  const s=state.students.find(st=>st.id===id);if(!s)return;
+  if(!confirm(`¿Quitar a ${s.nombre} ${s.apellido}?`))return;
+  try{await fbDeleteStudent(id);showToast(`${s.nombre} eliminado`,'');}
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+
+// ========== BACKDROP CLOSE ==========
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
+
+// ========== EXPOSE TO window (necesario para onclick= en HTML con type=module) ==========
+const w={
+  goHome,goWrite,goAdmin,goRecursos,scrollToPosts,handlePublicarClick,
+  openLogin,closeLogin,openAdminLogin,closeAdminLogin,doLogin,doAdminLogin,logout,
+  openChangePass,closeChangePass,checkPassStrength,doChangePass,
+  setCType,handleFile,removeFile,submitPost,
+  openPost,editCurrentPost,deleteCurrentPost,
+  filterPosts,changePage,
+  openAddSection,closeAddSection,selectEmoji,selectColor,saveSection,removeSection,
+  openAddStudent,openEditStudent,closeAddStudent,saveStudent,removeStudent,
+  adminDeletePost,
+};
+window.w=w;
+// También exponer funciones usadas directamente en atributos HTML inline
+Object.assign(window,w);
+
+// ========== INIT ==========
+async function init(){
+  showLoading(true,'Conectando con Firebase…');
+  setFbStatus('connecting');
+  try{
+    startListeners();
+    await new Promise(resolve=>{
+      const unsub=onSnapshot(query(collection(db,'posts'),limit(1)),()=>{unsub();resolve();},()=>resolve());
+      setTimeout(resolve,5000);
+    });
+    loadSession();
+    renderCategoryTabs();
+    renderHome();
+    setFbStatus('online');
+  }catch(e){
+    setFbStatus('offline');
+    showToast('No se pudo conectar con Firebase','error',6000);
+  }finally{
+    showLoading(false);
+  }
+}
+init();
+</script>
+</body>
+</html>

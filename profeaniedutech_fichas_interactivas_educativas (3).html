@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>profeaniedutech | Fichas Interactivas Educativas</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+    }
+    .titulo-kids {
+      font-family: 'Fredoka One', cursive;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    /* Animación de brillo para cromos */
+    .sparkle-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    .sparkle-effect::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 30%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(30deg);
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+    .sparkle-effect:hover::after {
+      left: 120%;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 via-teal-50 to-emerald-100 min-h-screen flex flex-col justify-between">
+
+  <!-- Cabecera de la Página -->
+  <header class="bg-white/90 backdrop-blur-md shadow-md border-b-4 border-sky-400 sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <!-- Logo y Título -->
+      <div class="flex items-center gap-3">
+        <div class="bg-gradient-to-tr from-sky-400 to-emerald-400 p-2 rounded-2xl shadow-md text-white text-2xl animate-pulse">
+          ⚽
+        </div>
+        <div>
+          <h1 class="titulo-kids text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-emerald-600 leading-none">profeaniedutech</h1>
+          <p class="text-xs font-bold text-emerald-700 tracking-wider">FICHAS INTERACTIVAS EDUCATIVAS</p>
+        </div>
+      </div>
+
+      <!-- Indicación Amigable -->
+      <div class="hidden md:flex items-center gap-2 bg-emerald-50 border border-emerald-200 py-1.5 px-4 rounded-full text-xs font-bold text-emerald-800">
+        <span>⭐</span> ¡Portal Oficial de Actividades del Mundial 2026!
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start flex-grow">
+    
+    <!-- Columna Izquierda: Catálogo de Actividades (4 de 12 columnas en pantallas grandes) -->
+    <section class="lg:col-span-5 bg-white/80 backdrop-blur rounded-3xl p-4 shadow-xl border-2 border-sky-200">
+      <div class="text-center mb-4">
+        <span class="text-xs font-extrabold uppercase tracking-widest text-sky-500 bg-sky-50 px-3 py-1 rounded-full border border-sky-100">Colección Mundialista</span>
+        <h2 class="titulo-kids text-xl text-slate-800 mt-2">Mascotas del Mundial</h2>
+        <p class="text-xs font-bold text-slate-500">Haz clic en una actividad para empezar a jugar</p>
+      </div>
+
+      <!-- Imagen Destacada de las Mascotas -->
+      <div class="mb-4 rounded-2xl overflow-hidden border-4 border-white shadow-md relative group">
+        <img src="Mascotas del mundial fifa 2026.jpg" alt="Mascotas del mundial" class="w-full h-auto object-cover max-h-48 transform group-hover:scale-105 transition-all duration-500" onerror="this.src='https://placehold.co/600x300/40e0d0/ffffff?text=Mascotas+del+Mundial+2026'">
+        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-white text-center">
+          <p class="text-xs font-extrabold">🦌 Alce &nbsp;•&nbsp; 🐆 Jaguar &nbsp;•&nbsp; 🦅 Águila</p>
+        </div>
+      </div>
+
+      <!-- Lista de Fichas -->
+      <div class="space-y-2.5 max-h-[400px] overflow-y-auto pr-1 custom-scrollbar" id="activities-list">
+        <!-- Generado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Columna Derecha: Pantalla de Juego Activa (7 de 12 columnas) -->
+    <section class="lg:col-span-7 bg-white rounded-3xl p-4 md:p-6 shadow-xl border-4 border-emerald-400 min-h-[500px] flex flex-col justify-between relative overflow-hidden" id="play-screen">
+      
+      <!-- Estado de bienvenida -->
+      <div id="welcome-view" class="flex flex-col items-center justify-center text-center my-auto py-12 px-4">
+        <div class="w-24 h-24 bg-gradient-to-br from-emerald-100 to-sky-100 rounded-full flex items-center justify-center text-5xl mb-6 shadow-inner animate-bounce">
+          🎯
+        </div>
+        <h3 class="titulo-kids text-2xl text-emerald-600">¡Bienvenido al Portal de Juego!</h3>
+        <p class="text-sm text-slate-600 max-w-sm mt-3 font-medium">
+          Selecciona cualquiera de las **11 actividades interactivas** en el catálogo de la izquierda para empezar a aprender y divertirte con las Mascotas del Mundial.
+        </p>
+        
+        <div class="mt-8 flex gap-4">
+          <span class="text-4xl">🦌</span>
+          <span class="text-4xl">🐆</span>
+          <span class="text-4xl">🦅</span>
+        </div>
+      </div>
+
+      <!-- Contenedor dinámico de juego -->
+      <div id="game-view" class="hidden flex-col h-full justify-between">
+        <!-- Encabezado de la Ficha Activa -->
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+          <div class="flex items-center gap-2.5">
+            <span id="active-game-emoji" class="text-3xl">🎮</span>
+            <div>
+              <h3 id="active-game-title" class="titulo-kids text-lg md:text-xl text-slate-800">Cargando Actividad</h3>
+              <p id="active-game-meta" class="text-[10px] font-bold text-slate-400 tracking-wider uppercase"></p>
+            </div>
+          </div>
+          <button onclick="closeActiveGame()" class="text-slate-400 hover:text-red-500 bg-slate-50 hover:bg-red-50 p-1.5 rounded-full transition-all">
+            ✕
+          </button>
+        </div>
+
+        <!-- Cuerpo del Juego Activo -->
+        <div id="active-game-body" class="flex-grow py-2">
+          <!-- Aquí se inyecta el HTML de cada juego -->
+        </div>
+
+        <!-- Banner de Éxito / Feedback del Juego -->
+        <div id="game-feedback-banner" class="hidden mt-4 bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-3 animate-pulse text-center">
+          <p id="game-feedback-text" class="text-sm font-extrabold text-yellow-800">¡Genial! Vas muy bien 👍</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="bg-slate-900 text-slate-400 text-center py-6 border-t-4 border-emerald-500 mt-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="titulo-kids text-emerald-400 text-lg">profeaniedutech</p>
+      <p class="text-xs font-bold mt-1">© 2026 • Plataforma de Actividades Didácticas Interactivas</p>
+      <p class="text-[10px] text-slate-500 mt-2 max-w-md mx-auto">
+        Todo el contenido de este sitio web está diseñado con fines estrictamente educativos y pedagógicos para el desarrollo infantil y psicomotriz.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Sistema global de avisos (Toast) -->
+  <div id="global-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white font-bold text-sm py-3 px-6 rounded-2xl shadow-2xl flex items-center gap-3">
+      <span id="toast-icon">⭐</span>
+      <span id="toast-message">Mensaje de prueba</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS Y LÓGICA DE JUEGOS -->
+  <script>
+    // Catálogo definitivo de actividades de profeaniedutech
+    const worksheets = [
+      {
+        id: "sopa-letras",
+        title: "1. 🔍 Sopa de Letras Mundialista",
+        description: "Encuentra palabras clave: ALCE, JAGUAR, AGUILA, PELOTA, GOL, EQUIPO.",
+        category: "Arte y Lengua",
+        age: "5-7",
+        emoji: "🔍"
+      },
+      {
+        id: "rompecabezas",
+        title: "2. 🧩 Rompecabezas de las Mascotas",
+        description: "¡Desafío de 16 piezas! Intercambia los bloques para armar la imagen de las Mascotas.",
+        category: "Arte y Lengua",
+        age: "5-7",
+        emoji: "🧩"
+      },
+      {
+        id: "ayuda-pelota",
+        title: "3. 🌀 Laberinto: ¡Ayuda a la Pelota!",
+        description: "Lleva el balón ⚽ por el camino correcto hasta nuestro amigo el jaguar 🐆.",
+        category: "Matemática y Lógica",
+        age: "5-7",
+        emoji: "🌀"
+      },
+      {
+        id: "coloreo-mundialista",
+        title: "4. 🎨 Coloreo Mundialista",
+        description: "Pinta las camisetas de Argentina y dibuja un ambiente deportivo.",
+        category: "Arte y Expresión",
+        age: "5-7",
+        emoji: "🎨"
+      },
+      {
+        id: "contemos-goles",
+        title: "5. 🔢 Contemos Goles",
+        description: "Cuenta los balones de fútbol y presiona la opción correcta en cada grupo.",
+        category: "Matemática",
+        age: "5-7",
+        emoji: "🔢"
+      },
+      {
+        id: "une-flechas",
+        title: "6. ✏️ Une con Flechas",
+        description: "Relaciona cada una de las mascotas mundialistas con su nombre correcto.",
+        category: "Lenguaje",
+        age: "5-7",
+        emoji: "✏️"
+      },
+      {
+        id: "encuentra-diferencias",
+        title: "7. 🔎 Encuentra las Diferencias",
+        description: "Observa las dos ilustraciones muy de cerca y encuentra las 3 diferencias.",
+        category: "Lógica y Observación",
+        age: "5-7",
+        emoji: "🔎"
+      },
+      {
+        id: "cuenta-marca",
+        title: "8. ⚽ Cuenta y Marca",
+        description: "Presta atención a los grupos de pelotas de fútbol y elige el número indicado.",
+        category: "Matemática",
+        age: "5-7",
+        emoji: "⚽"
+      },
+      {
+        id: "camino-mundial",
+        title: "9. 🏅 Camino al Mundial",
+        description: "Lanza el dado virtual, avanza casillas y sé el primero en cruzar la meta.",
+        category: "Lógica",
+        age: "5-7",
+        emoji: "🏅"
+      },
+      {
+        id: "inventamos-historia",
+        title: "10. 🎭 Inventamos una Historia",
+        description: "Combina palabras para crear un cuento divertido sobre las mascotas de la copa.",
+        category: "Lenguaje y Escritura",
+        age: "5-7",
+        emoji: "🎭"
+      },
+      {
+        id: "desafio-final",
+        title: "🌟 Desafío Final: Crea tu Mascota",
+        description: "Diseña tu propio cromo coleccionable con un lienzo interactivo de dibujo.",
+        category: "Creatividad",
+        age: "Todas las edades",
+        emoji: "🌟"
+      }
+    ];
+
+    // Cargar Catálogo en el DOM
+    function renderCatalog() {
+      const listContainer = document.getElementById('activities-list');
+      listContainer.innerHTML = '';
+
+      worksheets.forEach(w => {
+        // Checar si ya está completado
+        const completed = localStorage.getItem(`profeaniedutech_${w.id}_done`) === 'true';
+
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group ${
+          completed 
+            ? 'bg-emerald-50 border-emerald-300 hover:bg-emerald-100/70' 
+            : 'bg-white border-slate-100 hover:border-sky-300 hover:bg-sky-50/50'
+        }`;
+        
+        item.onclick = () => loadGame(w.id);
+
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${w.emoji}</span>
+            <div>
+              <h4 class="font-bold text-xs md:text-sm text-slate-800 group-hover:text-sky-700 transition-all">${w.title}</h4>
+              <p class="text-[10px] text-slate-500 font-medium">${w.category} • Edad ${w.age}</p>
+            </div>
+          </div>
+          <span class="text-lg">${completed ? '⭐' : '⚪'}</span>
+        `;
+        
+        listContainer.appendChild(item);
+      });
+    }
+
+    // Mostrar Toast Informativos
+    function showToast(message, type = "info") {
+      const toast = document.getElementById('global-toast');
+      const messageEl = document.getElementById('toast-message');
+      const iconEl = document.getElementById('toast-icon');
+
+      iconEl.innerText = type === "success" ? "🏆" : "⭐";
+      messageEl.innerText = message;
+
+      toast.className = "fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 transition-all duration-300";
+      
+      setTimeout(() => {
+        toast.className = "fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none";
+      }, 3000);
+    }
+
+    // Control de la Pantalla de Juego
+    function loadGame(id) {
+      document.getElementById('welcome-view').classList.add('hidden');
+      const gameView = document.getElementById('game-view');
+      gameView.classList.remove('hidden');
+
+      const worksheet = worksheets.find(w => w.id === id);
+      document.getElementById('active-game-title').innerText = worksheet.title;
+      document.getElementById('active-game-meta').innerText = `${worksheet.category} • EDAD ${worksheet.age}`;
+      document.getElementById('active-game-emoji').innerText = worksheet.emoji;
+
+      // Limpiar banner de feedback anterior
+      document.getElementById('game-feedback-banner').classList.add('hidden');
+
+      const parent = document.getElementById('active-game-body');
+      parent.innerHTML = '';
+
+      // Redirección de construcción de cada juego
+      switch(id) {
+        case "sopa-letras":
+          renderSopaLetras(parent);
+          break;
+        case "rompecabezas":
+          renderRompecabezas(parent);
+          break;
+        case "ayuda-pelota":
+          renderLaberinto(parent);
+          break;
+        case "coloreo-mundialista":
+          renderColoreo(parent);
+          break;
+        case "contemos-goles":
+          renderContemosGoles(parent);
+          break;
+        case "une-flechas":
+          renderUneFlechas(parent);
+          break;
+        case "encuentra-diferencias":
+          renderEncuentraDiferencias(parent);
+          break;
+        case "cuenta-marca":
+          renderCuentaMarca(parent);
+          break;
+        case "camino-mundial":
+          renderCaminoMundial(parent);
+          break;
+        case "inventamos-historia":
+          renderInventamosHistoria(parent);
+          break;
+        case "desafio-final":
+          renderDesafioFinal(parent);
+          break;
+      }
+
+      // Animación suave de entrada
+      parent.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function closeActiveGame() {
+      document.getElementById('game-view').classList.add('hidden');
+      document.getElementById('welcome-view').classList.remove('hidden');
+    }
+
+    function markGameCompleted(id) {
+      localStorage.setItem(`profeaniedutech_${id}_done`, 'true');
+      renderCatalog();
+      
+      const banner = document.getElementById('game-feedback-banner');
+      const text = document.getElementById('game-feedback-text');
+      
+      banner.classList.remove('hidden');
+      text.innerText = "🎉 ¡Ficha Completada de forma espectacular! ¡Sigue así! ⭐";
+    }
+
+    // 1. SOPA DE LETRAS INTERACTIVA
+    function renderSopaLetras(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-md mx-auto">
+          <p class="text-xs md:text-sm text-slate-600 font-bold mb-3">Encuentra y pulsa sobre las letras de cada palabra del listado.</p>
+          
+          <!-- Lista de Palabras -->
+          <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+            <span id="word-alce" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">ALCE</span>
+            <span id="word-jaguar" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">JAGUAR</span>
+            <span id="word-aguila" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">AGUILA</span>
+            <span id="word-pelota" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">PELOTA</span>
+            <span id="word-gol" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">GOL</span>
+            <span id="word-equipo" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border">EQUIPO</span>
+          </div>
+
+          <!-- Tablero Sopa de Letras -->
+          <div class="grid grid-cols-8 gap-1.5 bg-sky-100 p-3 rounded-2xl border-4 border-sky-300 mx-auto max-w-[340px] select-none">
+            <!-- Letras cargadas dinámicamente -->
+          </div>
+
+          <div class="mt-4 flex justify-between items-center text-xs font-bold text-sky-800">
+            <span id="sopa-progress">Palabras encontradas: 0/6</span>
+            <button onclick="resetSopa()" class="bg-sky-50 hover:bg-sky-200 px-3 py-1 rounded-full text-sky-800 transition-all border border-sky-200">Reiniciar 🔄</button>
+          </div>
+        </div>
+      `;
+
+      // Sopa de letras pre-construida de 6 filas x 8 columnas
+      const letterGrid = [
+        ['A', 'G', 'U', 'I', 'L', 'A', 'X', 'M'],
+        ['L', 'P', 'E', 'L', 'O', 'T', 'A', 'A'],
+        ['C', 'J', 'A', 'G', 'U', 'A', 'R', 'R'],
+        ['E', 'O', 'L', 'G', 'T', 'Y', 'P', 'C'],
+        ['T', 'U', 'E', 'Q', 'U', 'I', 'P', 'O'],
+        ['B', 'N', 'M', 'A', 'L', 'C', 'E', 'S']
+      ];
+
+      // Definición matemática de dónde se ubica cada palabra dentro de la cuadrícula (para validación táctil)
+      const wordsMap = {
+        "AGUILA": [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5]],
+        "PELOTA": [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6]],
+        "JAGUAR": [[2,1],[2,2],[2,3],[2,4],[2,5],[2,6]],
+        "ALCE": [[5,3],[5,4],[5,5],[5,6]],
+        "GOL": [[3,2],[2,2],[1,2]], // Vertical invertida
+        "EQUIPO": [[4,2],[4,3],[4,4],[4,5],[4,6],[4,7]]
+      };
+
+      let selectedCoords = [];
+      let foundWords = [];
+
+      window.resetSopa = function() {
+        selectedCoords = [];
+        foundWords = [];
+        drawSopa();
+      };
+
+      function drawSopa() {
+        const board = parent.querySelector('.grid');
+        board.innerHTML = '';
+
+        letterGrid.forEach((row, rIdx) => {
+          row.forEach((char, cIdx) => {
+            const btn = document.createElement('button');
+            btn.className = "w-9 h-9 flex items-center justify-center font-extrabold text-sm rounded-xl transition-all focus:outline-none shadow-sm ";
+            btn.innerText = char;
+
+            // Determinar si esta letra ya pertenece a una palabra descubierta
+            let belongsToFound = false;
+            let foundColor = "bg-green-500 text-white";
+            
+            Object.keys(wordsMap).forEach((word, wIdx) => {
+              if (foundWords.includes(word)) {
+                const hasCoord = wordsMap[word].some(coord => coord[0] === rIdx && coord[1] === cIdx);
+                if (hasCoord) {
+                  belongsToFound = true;
+                  // Diferente color por palabra descubierta
+                  const colors = ["bg-emerald-500", "bg-amber-500", "bg-purple-500", "bg-pink-500", "bg-blue-500", "bg-orange-500"];
+                  foundColor = `${colors[wIdx % colors.length]} text-white`;
+                }
+              }
+            });
+
+            // Determinar si está actualmente seleccionada por el dedo del niño
+            const isCurrentlySelected = selectedCoords.some(coord => coord[0] === rIdx && coord[1] === cIdx);
+
+            if (belongsToFound) {
+              btn.className += `${foundColor} cursor-default`;
+            } else if (isCurrentlySelected) {
+              btn.className += "bg-sky-500 text-white scale-115 border-2 border-sky-600";
+            } else {
+              btn.className += "bg-white hover:bg-sky-50 text-slate-700 active:scale-90 border border-slate-100";
+            }
+
+            btn.onclick = () => {
+              if (belongsToFound) return;
+              
+              // Agregar o quitar de la selección
+              const existingIdx = selectedCoords.findIndex(coord => coord[0] === rIdx && coord[1] === cIdx);
+              if (existingIdx > -1) {
+                selectedCoords.splice(existingIdx, 1);
+              } else {
+                selectedCoords.push([rIdx, cIdx]);
+              }
+
+              checkSelections();
+              drawSopa();
+            };
+
+            board.appendChild(btn);
+          });
+        });
+
+        // Actualizar visualización del listado de palabras
+        Object.keys(wordsMap).forEach(word => {
+          const item = document.getElementById(`word-${word.toLowerCase()}`);
+          if (item) {
+            if (foundWords.includes(word)) {
+              item.className = "bg-green-500 text-white px-2.5 py-1 rounded-full text-xs font-extrabold border-2 border-green-600 scale-105 transition-all";
+            } else {
+              item.className = "bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full text-xs font-extrabold border";
+            }
+          }
+        });
+
+        document.getElementById('sopa-progress').innerText = `Palabras encontradas: ${foundWords.length}/6`;
+        if (foundWords.length === 6) {
+          markGameCompleted("sopa-letras");
+        }
+      }
+
+      function checkSelections() {
+        // Comprobar si la selección actual de coordenadas coincide con alguna palabra del mapa
+        Object.keys(wordsMap).forEach(word => {
+          if (foundWords.includes(word)) return;
+
+          const coords = wordsMap[word];
+          if (coords.length === selectedCoords.length) {
+            // Verificar si todas las coordenadas están presentes
+            const allMatch = coords.every(c1 => {
+              return selectedCoords.some(c2 => c1[0] === c2[0] && c1[1] === c2[1]);
+            });
+
+            if (allMatch) {
+              foundWords.push(word);
+              selectedCoords = [];
+              showToast(`🔍 ¡Encontraste la palabra ${word}!`, "success");
+            }
+          }
+        });
+      }
+
+      window.resetSopa();
+    }
+
+    // 2. ROMPECABEZAS DESLIZANTE CON LA IMAGEN REAL rompecabeza  mas garnde.jpg
+    function renderRompecabezas(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-md mx-auto">
+          <p class="text-xs md:text-sm text-slate-600 font-bold mb-3">Toca dos piezas para intercambiarlas de lugar y armar la foto de las mascotas con la camiseta oficial.</p>
+          
+          <div id="puzzle-board" class="grid grid-cols-4 gap-1 bg-amber-400 p-2 rounded-2xl border-4 border-yellow-500 mx-auto w-full aspect-square relative overflow-hidden select-none">
+            <!-- Piezas generadas por JS -->
+          </div>
+
+          <div class="flex justify-between items-center mt-3 px-1 text-xs font-bold text-purple-700">
+            <span id="puzzle-progress">Piezas listas: 0/16</span>
+            <button onclick="resetPuzzle()" class="bg-purple-100 hover:bg-purple-200 px-3 py-1 rounded-full text-purple-800 transition-all">Mezclar otra vez 🔄</button>
+          </div>
+
+          <div id="puzzle-win" class="hidden mt-4 bg-green-100 border border-green-400 text-green-800 p-3 rounded-2xl animate-bounce font-extrabold text-sm flex items-center justify-center gap-2">
+            🎉 ¡Espectacular! Has ordenado todas las piezas de las mascotas.
+          </div>
+        </div>
+      `;
+
+      // Mapeo preciso: qué índice del archivo "rompecabeza  mas garnde.jpg" (0 a 15 de izquierda a derecha, arriba a abajo)
+      // debe ir en cada celda final (0 a 15) para reconstruir la imagen resuelta de las Mascotas.
+      const solvedOrder = [14, 4, 1, 2, 5, 11, 9, 0, 15, 8, 7, 6, 3, 10, 13, 12];
+
+      // Estado actual de las piezas colocadas en el tablero (posiciones 0 a 15)
+      let currentLayout = [];
+      let firstSelected = null;
+
+      window.resetPuzzle = function() {
+        firstSelected = null;
+        document.getElementById('puzzle-win').classList.add('hidden');
+        
+        // Creamos una copia de los IDs de las piezas y los mezclamos de forma aleatoria
+        currentLayout = [...solvedOrder].sort(() => Math.random() - 0.5);
+        
+        // Evitamos que empiece resuelto por accidente
+        let isExactlySolved = currentLayout.every((val, index) => val === solvedOrder[index]);
+        if (isExactlySolved) {
+          currentLayout.reverse();
+        }
+        
+        drawPuzzle();
+      };
+
+      function drawPuzzle() {
+        const board = document.getElementById('puzzle-board');
+        if (!board) return;
+        board.innerHTML = '';
+
+        let correctCount = 0;
+
+        currentLayout.forEach((pieceId, slotIndex) => {
+          // El pieceId nos dice de qué coordenada (fila, columna) de la imagen original sacar la pieza
+          const srcRow = Math.floor(pieceId / 4);
+          const srcCol = pieceId % 4;
+
+          // Porcentaje para posicionar el fondo de la pieza recortada (4x4)
+          const posX = (srcCol * 100) / 3;
+          const posY = (srcRow * 100) / 3;
+
+          const isCorrect = pieceId === solvedOrder[slotIndex];
+          if (isCorrect) correctCount++;
+
+          const tile = document.createElement('div');
+          tile.className = `relative rounded-lg overflow-hidden cursor-pointer shadow-sm border ${
+            isCorrect ? 'border-emerald-400' : 'border-white/40'
+          } aspect-square transition-all duration-200 active:scale-95`;
+          
+          tile.style.backgroundImage = "url('rompecabeza  mas garnde.jpg')";
+          tile.style.backgroundSize = "400% 400%";
+          tile.style.backgroundPosition = `${posX}% ${posY}%`;
+
+          // Interfaz amigable para niños: estrella si la pieza está en su lugar correcto
+          tile.innerHTML = `
+            <div class="absolute inset-0 border-2 border-transparent hover:border-yellow-300 rounded-lg transition-all" id="border-tile-${slotIndex}"></div>
+            ${isCorrect ? '<div class="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5 text-[8px] leading-none shadow-sm">⭐</div>' : ''}
+          `;
+
+          tile.onclick = () => {
+            if (firstSelected === null) {
+              firstSelected = slotIndex;
+              const borderEl = document.getElementById(`border-tile-${slotIndex}`);
+              if (borderEl) {
+                borderEl.className = "absolute inset-0 border-4 border-purple-600 rounded-lg animate-pulse transition-all bg-purple-500/10";
+              }
+            } else {
+              // Intercambiar pieza del primer click con el segundo click
+              const temp = currentLayout[firstSelected];
+              currentLayout[firstSelected] = currentLayout[slotIndex];
+              currentLayout[slotIndex] = temp;
+              
+              firstSelected = null;
+              drawPuzzle();
+              checkPuzzleWin();
+            }
+          };
+
+          board.appendChild(tile);
+        });
+
+        // Actualizar contador de progreso
+        const progressText = document.getElementById('puzzle-progress');
+        if (progressText) {
+          progressText.innerText = `Piezas listas: ${correctCount}/16`;
+        }
+      }
+
+      function checkPuzzleWin() {
+        let win = true;
+        for (let i = 0; i < currentLayout.length; i++) {
+          if (currentLayout[i] !== solvedOrder[i]) {
+            win = false;
+            break;
+          }
+        }
+        if (win) {
+          document.getElementById('puzzle-win').classList.remove('hidden');
+          markGameCompleted("rompecabezas");
+        }
+      }
+
+      // Iniciar el rompecabezas por primera vez
+      window.resetPuzzle();
+    }
+
+    // 3. LABERINTO DEL JAGUAR
+    function renderLaberinto(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-sm mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-3">Lleva la pelota ⚽ hasta el jaguar campeón 🐆. ¡Evita los conos naranjas!</p>
+          
+          <div class="bg-emerald-800/10 p-2 rounded-2xl border-2 border-emerald-300 mb-3">
+            <div id="maze-container" class="grid grid-cols-5 gap-1 aspect-square w-full bg-emerald-950 rounded-xl p-1 relative overflow-hidden">
+              <!-- Celdas inyectadas por JS -->
+            </div>
+          </div>
+
+          <!-- Teclado en Pantalla -->
+          <div class="flex flex-col items-center gap-1.5 max-w-[160px] mx-auto">
+            <button onclick="movePlayer(0, -1)" class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-extrabold p-2.5 rounded-xl shadow-md w-11 h-11 flex items-center justify-center text-lg select-none">▲</button>
+            <div class="flex gap-4">
+              <button onclick="movePlayer(-1, 0)" class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-extrabold p-2.5 rounded-xl shadow-md w-11 h-11 flex items-center justify-center text-lg select-none">◀</button>
+              <div class="w-11 h-11 flex items-center justify-center text-xl">⚽</div>
+              <button onclick="movePlayer(1, 0)" class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-extrabold p-2.5 rounded-xl shadow-md w-11 h-11 flex items-center justify-center text-lg select-none">▶</button>
+            </div>
+            <button onclick="movePlayer(0, 1)" class="bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-extrabold p-2.5 rounded-xl shadow-md w-11 h-11 flex items-center justify-center text-lg select-none">▼</button>
+          </div>
+        </div>
+      `;
+
+      const mazeLayout = [
+        [' ', ' ', 'X', ' ', ' '],
+        ['X', ' ', 'X', ' ', 'X'],
+        [' ', ' ', ' ', ' ', ' '],
+        [' ', 'X', 'X', 'X', ' '],
+        [' ', ' ', ' ', 'X', 'G']
+      ];
+
+      const size = 5;
+      let playerPos = { x: 0, y: 0 };
+      let gameWon = false;
+
+      window.drawMaze = function() {
+        const container = document.getElementById('maze-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        for (let y = 0; y < size; y++) {
+          for (let x = 0; x < size; x++) {
+            const cell = document.createElement('div');
+            cell.className = "relative rounded-lg flex items-center justify-center transition-all duration-150 select-none " + 
+              ((x + y) % 2 === 0 ? "bg-emerald-800" : "bg-emerald-700");
+
+            if (mazeLayout[y][x] === 'X') {
+              cell.innerHTML = '<span class="text-xl filter drop-shadow">🚧</span>'; // Cono
+            } else if (mazeLayout[y][x] === 'G') {
+              cell.innerHTML = '<span class="text-2xl filter drop-shadow">🐆</span>'; // Jaguar Meta
+            }
+
+            if (playerPos.x === x && playerPos.y === y) {
+              cell.innerHTML = '<span class="text-2xl md:text-3xl filter drop-shadow z-10 animate-bounce absolute">⚽</span>';
+            }
+
+            container.appendChild(cell);
+          }
+        }
+      }
+
+      window.movePlayer = function(dx, dy) {
+        if (gameWon) return;
+
+        const nx = playerPos.x + dx;
+        const ny = playerPos.y + dy;
+
+        if (nx >= 0 && nx < size && ny >= 0 && ny < size) {
+          if (mazeLayout[ny][nx] !== 'X') {
+            playerPos.x = nx;
+            playerPos.y = ny;
+            
+            if (mazeLayout[ny][nx] === 'G') {
+              gameWon = true;
+              markGameCompleted("ayuda-pelota");
+            }
+          } else {
+            showToast("💥 ¡Chocaste con un cono de entrenamiento!", "info");
+          }
+        }
+        drawMaze();
+      }
+
+      // Evento de teclado opcional
+      const handleKeyPress = (e) => {
+        if (!document.getElementById('maze-container')) return;
+        if (e.key === 'ArrowUp') movePlayer(0, -1);
+        if (e.key === 'ArrowDown') movePlayer(0, 1);
+        if (e.key === 'ArrowLeft') movePlayer(-1, 0);
+        if (e.key === 'ArrowRight') movePlayer(1, 0);
+      };
+
+      document.removeEventListener('keydown', handleKeyPress);
+      document.addEventListener('keydown', handleKeyPress);
+
+      drawMaze();
+    }
+
+    // 4. COLOREO INTERACTIVO
+    function renderColoreo(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-sm mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-4">Elige un color y pinta los bloques de la camiseta de Argentina y su bandera nacional.</p>
+          
+          <!-- Paleta de Colores -->
+          <div class="flex justify-center gap-2.5 mb-5">
+            <button onclick="selectPaintColor('#38bdf8', this)" class="w-10 h-10 rounded-full border-4 border-white shadow-md cursor-pointer transition-all bg-sky-400 ring-2 ring-sky-400 ring-offset-2"></button>
+            <button onclick="selectPaintColor('#ffffff', this)" class="w-10 h-10 rounded-full border-4 border-slate-200 shadow-md cursor-pointer transition-all bg-white"></button>
+            <button onclick="selectPaintColor('#1e293b', this)" class="w-10 h-10 rounded-full border-4 border-white shadow-md cursor-pointer transition-all bg-slate-800"></button>
+            <button onclick="selectPaintColor('#eab308', this)" class="w-10 h-10 rounded-full border-4 border-white shadow-md cursor-pointer transition-all bg-yellow-500"></button>
+          </div>
+
+          <!-- Camiseta y Bandera en SVG coloreables -->
+          <div class="flex flex-col items-center gap-4 bg-slate-50 p-4 rounded-3xl border-2 border-slate-200">
+            <!-- Dibujo de Camiseta -->
+            <svg id="coloring-canvas" class="w-36 h-36" viewBox="0 0 100 100">
+              <!-- Manga Izquierda -->
+              <path d="M 30,20 L 10,35 L 20,45 L 30,35 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Manga Derecha -->
+              <path d="M 70,20 L 90,35 L 80,45 L 70,35 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Cuerpo: Franja 1 (Celeste por defecto o editable) -->
+              <rect x="30" y="20" width="10" height="60" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Cuerpo: Franja 2 -->
+              <rect x="40" y="20" width="10" height="60" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Cuerpo: Franja 3 -->
+              <rect x="50" y="20" width="10" height="60" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Cuerpo: Franja 4 -->
+              <rect x="60" y="20" width="10" height="60" fill="#e2e8f0" stroke="#334155" stroke-width="2" onclick="paintElement(this)" class="paintable" />
+              <!-- Cuello de la camiseta -->
+              <polygon points="40,20 50,30 60,20" fill="#ffffff" stroke="#334155" stroke-width="2" />
+            </svg>
+
+            <!-- Bandera Argentina SVG coloreable -->
+            <svg class="w-40 h-24 border border-slate-300" viewBox="0 0 90 60">
+              <!-- Franja Superior -->
+              <rect x="0" y="0" width="90" height="20" fill="#e2e8f0" stroke="#334155" stroke-width="1.5" onclick="paintElement(this)" class="paintable" />
+              <!-- Franja Central -->
+              <rect x="0" y="20" width="90" height="20" fill="#e2e8f0" stroke="#334155" stroke-width="1.5" onclick="paintElement(this)" class="paintable" />
+              <!-- Sol de Mayo en medio (fijo para decorar) -->
+              <circle cx="45" cy="30" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+              <!-- Franja Inferior -->
+              <rect x="0" y="40" width="90" height="20" fill="#e2e8f0" stroke="#334155" stroke-width="1.5" onclick="paintElement(this)" class="paintable" />
+            </svg>
+          </div>
+
+          <div class="mt-4">
+            <button onclick="finishColoring()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs py-2 px-5 rounded-full shadow-md active:scale-95">¡Listo, Terminé de Pintar! 🌟</button>
+          </div>
+        </div>
+      `;
+
+      let selectedColor = '#38bdf8'; // Celeste por defecto
+
+      window.selectPaintColor = function(color, btn) {
+        selectedColor = color;
+        // Quitar resalte de otros botones
+        parent.querySelectorAll('.flex > button').forEach(b => {
+          b.className = b.className.replace(/ ring-2.*/g, '');
+        });
+        // Agregar resalte al activo
+        btn.className += ` ring-2 ring-[${color}] ring-offset-2`;
+      };
+
+      window.paintElement = function(element) {
+        element.setAttribute('fill', selectedColor);
+      };
+
+      window.finishColoring = function() {
+        showToast("🎨 ¡Tu diseño deportivo quedó hermosísimo!", "success");
+        markGameCompleted("coloreo-mundialista");
+      };
+    }
+
+    // 5. CONTEMOS GOLES
+    function renderContemosGoles(parent) {
+      parent.innerHTML = `
+        <div class="max-w-md mx-auto space-y-6">
+          <p class="text-xs text-slate-500 font-bold text-center">¡Cuenta con cuidado cuántos balones hay en cada tarjeta!</p>
+
+          <!-- Tarjeta 1 -->
+          <div class="p-4 bg-sky-50 rounded-2xl border-2 border-sky-300">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-extrabold text-sky-800 text-xs">GRUPO 1:</span>
+              <span id="score-g1" class="text-lg">❓</span>
+            </div>
+            <div class="flex justify-center gap-2 mb-4 py-1">
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="checkGoles(1, 2, this)" class="opt-g1 bg-white border border-sky-200 hover:bg-sky-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">2</button>
+              <button onclick="checkGoles(1, 4, this)" class="opt-g1 bg-white border border-sky-200 hover:bg-sky-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">4</button>
+              <button onclick="checkGoles(1, 6, this)" class="opt-g1 bg-white border border-sky-200 hover:bg-sky-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">6</button>
+            </div>
+          </div>
+
+          <!-- Tarjeta 2 -->
+          <div class="p-4 bg-emerald-50 rounded-2xl border-2 border-emerald-300">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-extrabold text-emerald-800 text-xs">GRUPO 2:</span>
+              <span id="score-g2" class="text-lg">❓</span>
+            </div>
+            <div class="flex justify-center gap-2 mb-4 py-1">
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="checkGoles(2, 5, this)" class="opt-g2 bg-white border border-emerald-200 hover:bg-emerald-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">5</button>
+              <button onclick="checkGoles(2, 6, this)" class="opt-g2 bg-white border border-emerald-200 hover:bg-emerald-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">6</button>
+              <button onclick="checkGoles(2, 8, this)" class="opt-g2 bg-white border border-emerald-200 hover:bg-emerald-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">8</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      let q1Done = false;
+      let q2Done = false;
+
+      window.checkGoles = function(gGroup, val, btn) {
+        if (gGroup === 1) {
+          const btns = parent.querySelectorAll('.opt-g1');
+          btns.forEach(b => b.className = b.className.replace(/bg-red.*/, ''));
+          
+          if (val === 4) {
+            btn.className = "opt-g1 bg-green-500 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+            document.getElementById('score-g1').innerText = "⭐";
+            q1Done = true;
+          } else {
+            btn.className = "opt-g1 bg-red-400 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+          }
+        } else {
+          const btns = parent.querySelectorAll('.opt-g2');
+          btns.forEach(b => b.className = b.className.replace(/bg-red.*/, ''));
+          
+          if (val === 6) {
+            btn.className = "opt-g2 bg-green-500 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+            document.getElementById('score-g2').innerText = "⭐";
+            q2Done = true;
+          } else {
+            btn.className = "opt-g2 bg-red-400 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+          }
+        }
+
+        if (q1Done && q2Done) {
+          markGameCompleted("contemos-goles");
+        }
+      };
+    }
+
+    // 6. UNE CON FLECHAS SVG
+    function renderUneFlechas(parent) {
+      parent.innerHTML = `
+        <div class="max-w-md mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-4 text-center">Toca un animal de la izquierda y luego su cartel con el nombre en la derecha.</p>
+          
+          <div id="une-area" class="relative grid grid-cols-2 gap-x-12 py-4">
+            <!-- Lienzo SVG para trazar líneas -->
+            <svg id="une-svg" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
+
+            <!-- Izquierda: Animales -->
+            <div class="flex flex-col gap-6 justify-around z-20">
+              <button id="unelf-alce" onclick="selectUneSide('left', 'alce', this)" class="bg-amber-50 hover:bg-amber-100 border-2 border-amber-200 p-3 rounded-2xl flex items-center justify-center text-4xl transition-all active:scale-95">🦌</button>
+              <button id="unelf-jaguar" onclick="selectUneSide('left', 'jaguar', this)" class="bg-amber-50 hover:bg-amber-100 border-2 border-amber-200 p-3 rounded-2xl flex items-center justify-center text-4xl transition-all active:scale-95">🐆</button>
+              <button id="unelf-aguila" onclick="selectUneSide('left', 'aguila', this)" class="bg-amber-50 hover:bg-amber-100 border-2 border-amber-200 p-3 rounded-2xl flex items-center justify-center text-4xl transition-all active:scale-95">🦅</button>
+            </div>
+
+            <!-- Derecha: Carteles de nombres -->
+            <div class="flex flex-col gap-6 justify-around z-20">
+              <button id="unerg-jaguar" onclick="selectUneSide('right', 'jaguar', this)" class="bg-slate-50 hover:bg-sky-50 border-2 border-slate-200 text-slate-700 font-extrabold py-3.5 px-3 rounded-xl text-xs tracking-wider transition-all active:scale-95">JAGUAR</button>
+              <button id="unerg-alce" onclick="selectUneSide('right', 'alce', this)" class="bg-slate-50 hover:bg-sky-50 border-2 border-slate-200 text-slate-700 font-extrabold py-3.5 px-3 rounded-xl text-xs tracking-wider transition-all active:scale-95">ALCE</button>
+              <button id="unerg-aguila" onclick="selectUneSide('right', 'aguila', this)" class="bg-slate-50 hover:bg-sky-50 border-2 border-slate-200 text-slate-700 font-extrabold py-3.5 px-3 rounded-xl text-xs tracking-wider transition-all active:scale-95">AGUILA</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      let activeLeft = null;
+      let activeLeftEl = null;
+      let matched = [];
+
+      window.selectUneSide = function(side, id, el) {
+        if (matched.includes(id)) return;
+
+        if (side === 'left') {
+          if (activeLeftEl) activeLeftEl.classList.remove('ring-4', 'ring-sky-400');
+          activeLeft = id;
+          activeLeftEl = el;
+          el.classList.add('ring-4', 'ring-sky-400');
+        } else {
+          if (!activeLeft) {
+            showToast("❌ Selecciona primero la mascota de la izquierda", "info");
+            return;
+          }
+
+          if (activeLeft === id) {
+            // Unir éxito
+            matched.push(id);
+            activeLeftEl.classList.remove('ring-4', 'ring-sky-400');
+            activeLeftEl.className = "bg-green-100 border-green-500 p-3 rounded-2xl flex items-center justify-center text-4xl cursor-default opacity-80";
+            el.className = "bg-green-500 text-white font-extrabold py-3.5 px-3 rounded-xl text-xs tracking-wider cursor-default opacity-80";
+            
+            // Dibujar la línea
+            drawConnectionLine(activeLeftEl, el);
+            
+            activeLeft = null;
+            activeLeftEl = null;
+
+            if (matched.length === 3) {
+              markGameCompleted("une-flechas");
+            }
+          } else {
+            showToast("❌ Intenta otra vez, ¡tú puedes!", "info");
+          }
+        }
+      }
+
+      function drawConnectionLine(lEl, rEl) {
+        const svg = document.getElementById('une-svg');
+        const area = document.getElementById('une-area');
+        if (!svg || !area) return;
+
+        const lRect = lEl.getBoundingClientRect();
+        const rRect = rEl.getBoundingClientRect();
+        const areaRect = area.getBoundingClientRect();
+
+        const x1 = lRect.right - areaRect.left;
+        const y1 = (lRect.top + lRect.height / 2) - areaRect.top;
+        const x2 = rRect.left - areaRect.left;
+        const y2 = (rRect.top + rRect.height / 2) - areaRect.top;
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "#10b981");
+        line.setAttribute("stroke-width", "4");
+        line.setAttribute("stroke-dasharray", "none");
+        
+        svg.appendChild(line);
+      }
+    }
+
+    // 7. ENCUENTRA LAS DIFERENCIAS
+    function renderEncuentraDiferencias(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-sm mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-4">Pulsa sobre la imagen derecha para encontrar las 3 diferencias (Pelota, Sol, Zapatilla).</p>
+          
+          <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-3xl border border-slate-200">
+            <!-- Imagen Original -->
+            <div class="relative">
+              <span class="absolute top-1 left-1 bg-sky-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">ORIGINAL</span>
+              <svg class="w-full aspect-square bg-sky-100 rounded-2xl" viewBox="0 0 100 100">
+                <circle cx="20" cy="20" r="8" fill="#eab308" /> <!-- Sol -->
+                <circle cx="50" cy="55" r="16" fill="#f59e0b" /> <!-- Jaguar simplificado -->
+                <circle cx="43" cy="50" r="3" fill="black" />
+                <circle cx="57" cy="50" r="3" fill="black" />
+                <polygon points="48,56 52,56 50,60" fill="brown" />
+                <!-- Pelota Azul -->
+                <circle cx="30" cy="80" r="10" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5" />
+                <path d="M25,80 L35,80 M30,75 L30,85" stroke="#0284c7" />
+                <!-- Tenis Rojos -->
+                <rect x="42" y="85" width="8" height="5" rx="2" fill="#ef4444" />
+                <rect x="52" y="85" width="8" height="5" rx="2" fill="#ef4444" />
+              </svg>
+            </div>
+
+            <!-- Imagen Modificada con Diferencias Interactiva -->
+            <div class="relative">
+              <span class="absolute top-1 left-1 bg-amber-500 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded-full">¿DIFERENTE?</span>
+              <svg class="w-full aspect-square bg-sky-100 rounded-2xl relative" viewBox="0 0 100 100">
+                <!-- Sol que cambia a nube (Dif 1) -->
+                <g onclick="foundDiff(1)" class="cursor-pointer">
+                  <path d="M 12,23 C 15,18 25,18 28,23 C 32,23 32,30 28,31 C 25,34 15,34 12,31" fill="#cbd5e1" id="diff-1-cloud" />
+                  <circle cx="22" cy="24" r="5" fill="#ca8a04" class="hidden" id="diff-1-sol" />
+                </g>
+
+                <!-- Jaguar -->
+                <circle cx="50" cy="55" r="16" fill="#f59e0b" />
+                <circle cx="43" cy="50" r="3" fill="black" />
+                <circle cx="57" cy="50" r="3" fill="black" />
+                <polygon points="48,56 52,56 50,60" fill="brown" />
+
+                <!-- Pelota que cambia de color Azul a Verde (Dif 2) -->
+                <circle cx="30" cy="80" r="10" fill="#22c55e" stroke="#16a34a" stroke-width="1.5" onclick="foundDiff(2)" class="cursor-pointer" id="diff-2-ball" />
+
+                <!-- Tenis que cambia de Rojo a Morado (Dif 3) -->
+                <g onclick="foundDiff(3)" class="cursor-pointer" id="diff-3-shoes">
+                  <rect x="42" y="85" width="8" height="5" rx="2" fill="#a855f7" />
+                  <rect x="52" y="85" width="8" height="5" rx="2" fill="#a855f7" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mt-4 font-bold text-xs text-sky-800" id="diff-prog">
+            Diferencias encontradas: 0/3
+          </div>
+        </div>
+      `;
+
+      let diffsFound = [];
+
+      window.foundDiff = function(id) {
+        if (diffsFound.includes(id)) return;
+        diffsFound.push(id);
+
+        if (id === 1) {
+          // Cambiar visualmente para confirmar
+          document.getElementById('diff-1-cloud').setAttribute('fill', '#eab308');
+          showToast("🔎 ¡Encontraste la nube en vez de sol!", "success");
+        } else if (id === 2) {
+          document.getElementById('diff-2-ball').setAttribute('fill', '#38bdf8');
+          document.getElementById('diff-2-ball').setAttribute('stroke', '#0284c7');
+          showToast("🔎 ¡Encontraste la pelota verde!", "success");
+        } else if (id === 3) {
+          showToast("🔎 ¡Encontraste las zapatillas de diferente color!", "success");
+        }
+
+        document.getElementById('diff-prog').innerText = `Diferencias encontradas: ${diffsFound.length}/3`;
+
+        if (diffsFound.length === 3) {
+          markGameCompleted("encuentra-diferencias");
+        }
+      }
+    }
+
+    // 8. CUENTA Y MARCA
+    function renderCuentaMarca(parent) {
+      parent.innerHTML = `
+        <div class="max-w-md mx-auto space-y-6">
+          <p class="text-xs text-slate-500 font-bold text-center">Cuenta con paciencia las pelotas y selecciona la respuesta correcta.</p>
+
+          <!-- Tarjeta 1 -->
+          <div class="p-4 bg-orange-50 rounded-2xl border-2 border-orange-300">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-extrabold text-orange-800 text-xs">GRUPO 1:</span>
+              <span id="score-cm1" class="text-lg">❓</span>
+            </div>
+            <div class="flex justify-center gap-2 mb-4">
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="checkMarca(1, 2, this)" class="opt-cm1 bg-white border border-orange-200 hover:bg-orange-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">2</button>
+              <button onclick="checkMarca(1, 3, this)" class="opt-cm1 bg-white border border-orange-200 hover:bg-orange-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">3</button>
+              <button onclick="checkMarca(1, 5, this)" class="opt-cm1 bg-white border border-orange-200 hover:bg-orange-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">5</button>
+            </div>
+          </div>
+
+          <!-- Tarjeta 2 -->
+          <div class="p-4 bg-teal-50 rounded-2xl border-2 border-teal-300">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-extrabold text-teal-800 text-xs">GRUPO 2:</span>
+              <span id="score-cm2" class="text-lg">❓</span>
+            </div>
+            <div class="flex justify-center gap-2 mb-4">
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+              <span class="text-3xl">⚽</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="checkMarca(2, 4, this)" class="opt-cm2 bg-white border border-teal-200 hover:bg-teal-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">4</button>
+              <button onclick="checkMarca(2, 5, this)" class="opt-cm2 bg-white border border-teal-200 hover:bg-teal-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">5</button>
+              <button onclick="checkMarca(2, 7, this)" class="opt-cm2 bg-white border border-teal-200 hover:bg-teal-100 font-extrabold py-2 rounded-xl text-slate-700 transition-all text-sm">7</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      let q1Done = false;
+      let q2Done = false;
+
+      window.checkMarca = function(gGroup, val, btn) {
+        if (gGroup === 1) {
+          const btns = parent.querySelectorAll('.opt-cm1');
+          btns.forEach(b => b.className = b.className.replace(/bg-red.*/, ''));
+          
+          if (val === 3) {
+            btn.className = "opt-cm1 bg-green-500 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+            document.getElementById('score-cm1').innerText = "⭐";
+            q1Done = true;
+          } else {
+            btn.className = "opt-cm1 bg-red-400 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+          }
+        } else {
+          const btns = parent.querySelectorAll('.opt-cm2');
+          btns.forEach(b => b.className = b.className.replace(/bg-red.*/, ''));
+          
+          if (val === 5) {
+            btn.className = "opt-cm2 bg-green-500 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+            document.getElementById('score-cm2').innerText = "⭐";
+            q2Done = true;
+          } else {
+            btn.className = "opt-cm2 bg-red-400 text-white font-extrabold py-2 rounded-xl transition-all text-sm";
+          }
+        }
+
+        if (q1Done && q2Done) {
+          markGameCompleted("cuenta-marca");
+        }
+      };
+    }
+
+    // 9. TABLERO DE DADO "CAMINO AL MUNDIAL"
+    function renderCaminoMundial(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-sm mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-3">Tira el dado virtual 🎲 y avanza hacia la gran meta mundialista.</p>
+          
+          <!-- Botón de Dado -->
+          <div class="flex justify-center gap-4 items-center mb-4">
+            <button onclick="rollBoardDice()" id="btn-dice" class="bg-gradient-to-tr from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-extrabold px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-all flex items-center gap-2">
+              Lanzar Dado 🎲
+            </button>
+            <div id="dice-view" class="w-12 h-12 border-2 border-slate-300 bg-white flex items-center justify-center font-extrabold text-2xl rounded-xl shadow">?</div>
+          </div>
+
+          <!-- Mini Tablero Espiral de Casillas -->
+          <div class="grid grid-cols-5 gap-1.5 p-3 bg-slate-900 rounded-3xl border-4 border-slate-800 select-none">
+            <!-- Casillas creadas de forma dinámica -->
+          </div>
+        </div>
+      `;
+
+      // Definición de las 15 Casillas del camino
+      const totalCells = 15;
+      let playerCell = 0;
+
+      // Casillas especiales (1-indexed)
+      const specials = {
+        3: { emoji: "⚽", text: "¡Avanza 2!", effect: 2 },
+        8: { emoji: "🏆", text: "¡Avanza 3!", effect: 3 },
+        11: { emoji: "😢", text: "¡Retrocede 1!", effect: -1 }
+      };
+
+      window.drawBoard = function() {
+        const board = parent.querySelector('.grid');
+        board.innerHTML = '';
+
+        for (let i = 1; i <= totalCells; i++) {
+          const cell = document.createElement('div');
+          cell.className = "aspect-square rounded-xl flex flex-col items-center justify-center text-xs relative font-black ";
+
+          if (i === totalCells) {
+            cell.className += "bg-gradient-to-tr from-yellow-400 to-amber-500 text-white border-2 border-yellow-600";
+            cell.innerHTML = '<span class="text-lg">🏁</span>';
+          } else if (i === 1) {
+            cell.className += "bg-emerald-600 text-white border border-emerald-700";
+            cell.innerHTML = 'INICIO';
+          } else if (specials[i]) {
+            cell.className += "bg-slate-800 text-white border border-slate-700";
+            cell.innerHTML = `<span class="text-xs mb-0.5">${specials[i].emoji}</span>`;
+          } else {
+            cell.className += "bg-slate-700 text-slate-300 border border-slate-600";
+            cell.innerHTML = `${i}`;
+          }
+
+          // Ficha del jugador
+          if (playerCell === i) {
+            cell.innerHTML += '<div class="absolute inset-0 bg-rose-500/30 rounded-xl border-4 border-rose-500 animate-pulse flex items-center justify-center text-lg z-20">⚽</div>';
+          }
+
+          board.appendChild(cell);
+        }
+      }
+
+      window.rollBoardDice = function() {
+        const dBtn = document.getElementById('btn-dice');
+        const dView = document.getElementById('dice-view');
+        
+        dBtn.disabled = true;
+        
+        // Animación de tirada de dados
+        let count = 0;
+        const interval = setInterval(() => {
+          dView.innerText = Math.floor(Math.random() * 6) + 1;
+          count++;
+          if (count > 8) {
+            clearInterval(interval);
+            const roll = Math.floor(Math.random() * 6) + 1;
+            dView.innerText = roll;
+            
+            // Mover Ficha
+            playerCell = Math.min(totalCells, playerCell + roll);
+            if (playerCell === 0) playerCell = 1;
+
+            showToast(`🎲 Sacaste un ${roll}`, "info");
+
+            // Comprobar casillas especiales
+            setTimeout(() => {
+              if (specials[playerCell]) {
+                const spec = specials[playerCell];
+                playerCell = Math.max(1, Math.min(totalCells, playerCell + spec.effect));
+                showToast(`${spec.emoji} ${spec.text}`, "info");
+              }
+
+              drawBoard();
+              dBtn.disabled = false;
+
+              if (playerCell >= totalCells) {
+                markGameCompleted("camino-mundial");
+              }
+            }, 1000);
+          }
+        }, 100);
+      }
+
+      playerCell = 1;
+      drawBoard();
+    }
+
+    // 10. INVENTAMOS UNA HISTORIA
+    function renderInventamosHistoria(parent) {
+      parent.innerHTML = `
+        <div class="text-center max-w-sm mx-auto">
+          <p class="text-xs text-slate-500 font-bold mb-4">Elige las opciones y genera tu propia historia de las mascotas para leer en clase.</p>
+          
+          <div class="space-y-3 text-left bg-purple-50 p-4 rounded-3xl border-2 border-purple-200">
+            <div>
+              <label class="block text-xs font-bold text-purple-800 mb-1">Mascota protagonista:</label>
+              <select id="hist-mascot" class="w-full bg-white border border-purple-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 outline-none">
+                <option value="🦌 Alce deportista">🦌 Alce</option>
+                <option value="🐆 Jaguar veloz">🐆 Jaguar</option>
+                <option value="🦅 Águila campeona">🦅 Águila</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-purple-800 mb-1">¿Qué decidió hacer?</label>
+              <select id="hist-decid" class="w-full bg-white border border-purple-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 outline-none">
+                <option value="jugar un increíble partido con los niños">Jugar un partido</option>
+                <option value="correr a toda velocidad por el gran estadio">Correr por el estadio</option>
+                <option value="dar un gran vuelo de felicidad">Volar de felicidad</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-purple-800 mb-1">¿Por qué celebraron todos?</label>
+              <select id="hist-celebro" class="w-full bg-white border border-purple-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 outline-none">
+                <option value="ganaron la fabulosa Copa del Mundo 🏆">Ganaron la Copa del Mundo</option>
+                <option value="metieron el gol más espectacular de la historia ⚽">Metieron un súper gol</option>
+                <option value="hicieron un montón de nuevos amigos de todos los países 🤝">Hicieron nuevos amigos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button onclick="generateStory()" class="bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs py-2 px-6 rounded-full shadow-md active:scale-95">¡Crear Historia! 🎭</button>
+          </div>
+
+          <!-- Recuadro de Cuento -->
+          <div id="story-output" class="hidden mt-4 p-4 bg-amber-50 rounded-2xl border-4 border-dashed border-amber-300 text-left relative">
+            <h4 class="titulo-kids text-amber-800 text-sm mb-2">📖 Aventura en el Mundial</h4>
+            <p id="story-text" class="text-xs text-slate-700 font-bold leading-relaxed"></p>
+          </div>
+        </div>
+      `;
+
+      window.generateStory = function() {
+        const mascot = document.getElementById('hist-mascot').value;
+        const decid = document.getElementById('hist-decid').value;
+        const celebro = document.getElementById('hist-celebro').value;
+
+        const text = `El simpático ${mascot} encontró una pelota brillante en el estadio de la final mundialista. Entonces decidió ${decid}. Al final del día, todos celebraron con mucha emoción porque ${celebro}. ¡Fue el mejor día de sus vidas!`;
+
+        document.getElementById('story-text').innerText = text;
+        document.getElementById('story-output').classList.remove('hidden');
+
+        markGameCompleted("inventamos-historia");
+      }
+    }
+
+    // 11. DESAFÍO FINAL: CREA TU PROPIA MASCOTA
+    function renderDesafioFinal(parent) {
+      parent.innerHTML = `
+        <div class="max-w-md mx-auto space-y-4">
+          <p class="text-xs text-slate-500 font-bold text-center">¡Diseña tu propio cromo brillante de la nueva mascota estrella del Mundial!</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-emerald-50/50 p-4 rounded-3xl border-2 border-emerald-300">
+            <!-- Datos de la Mascota -->
+            <div class="space-y-2.5">
+              <div>
+                <label class="block text-[10px] font-black text-emerald-800">NOMBRE DE LA MASCOTA:</label>
+                <input id="masc-name" type="text" placeholder="Ej: Rayito" class="w-full bg-white border border-emerald-200 rounded-xl px-2.5 py-1.5 text-xs font-bold outline-none">
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-black text-emerald-800">¿QUÉ ANIMAL ES?:</label>
+                <input id="masc-anim" type="text" placeholder="Ej: León" class="w-full bg-white border border-emerald-200 rounded-xl px-2.5 py-1.5 text-xs font-bold outline-none">
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-black text-emerald-800">COLOR FAVORITO:</label>
+                <input id="masc-color" type="text" placeholder="Ej: Celeste y Blanco" class="w-full bg-white border border-emerald-200 rounded-xl px-2.5 py-1.5 text-xs font-bold outline-none">
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-black text-emerald-800">SUPERPODER:</label>
+                <input id="masc-power" type="text" placeholder="Ej: Super Velocidad" class="w-full bg-white border border-emerald-200 rounded-xl px-2.5 py-1.5 text-xs font-bold outline-none">
+              </div>
+            </div>
+
+            <!-- Área de Dibujo Táctil -->
+            <div class="flex flex-col items-center">
+              <label class="block text-[10px] font-black text-emerald-800 self-start mb-1">¡DIBUJA TU MASCOTA AQUÍ!</label>
+              <div class="relative bg-white rounded-2xl border-2 border-emerald-300 w-full h-32 overflow-hidden shadow-inner">
+                <canvas id="masc-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+              </div>
+              <button onclick="clearCanvas()" class="text-[9px] font-bold text-slate-500 hover:text-red-500 mt-1 self-end">Borrar Dibujo 🧹</button>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button onclick="buildCollectibleCard()" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-extrabold text-xs py-2 px-6 rounded-full shadow-md active:scale-95 transition-all">¡Generar Cromo de Mascota! 🌟</button>
+          </div>
+
+          <!-- Cromo de Mascota Generado -->
+          <div id="collectible-card" class="hidden max-w-[240px] mx-auto bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 p-3 rounded-2xl border-4 border-yellow-500 shadow-2xl relative perspective-1000 sparkle-effect">
+            <div class="bg-white rounded-xl p-2 flex flex-col items-center border border-yellow-600">
+              <div class="bg-sky-100 rounded-xl w-full flex items-center justify-center p-1.5 mb-2 h-28 overflow-hidden relative border border-sky-200">
+                <img id="card-image" class="max-h-full object-contain" />
+              </div>
+              <h4 id="card-name" class="titulo-kids text-amber-800 text-sm tracking-wide leading-none"></h4>
+              <p id="card-anim" class="text-[9px] font-extrabold text-slate-500 uppercase tracking-widest mt-1"></p>
+              
+              <div class="w-full border-t border-slate-100 mt-2 pt-1.5 space-y-1 text-[9px] font-extrabold text-slate-700 text-left">
+                <div>🎨 COLOR: <span id="card-color" class="text-amber-800"></span></div>
+                <div>⚡ PODER: <span id="card-power" class="text-amber-800"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Inicializar Canvas de Dibujo
+      const canvas = document.getElementById('masc-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+
+      // Adaptar tamaño interno del canvas al tamaño real mostrado
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+
+      // Estilo de línea de dibujo suave e infantil
+      ctx.strokeStyle = '#059669';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+
+      // Eventos de ratón
+      canvas.onmousedown = (e) => { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
+      canvas.onmousemove = (e) => { if (drawing) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); } };
+      canvas.onmouseup = () => drawing = false;
+
+      // Eventos táctiles para móviles
+      canvas.addEventListener('touchstart', (e) => {
+        drawing = true;
+        ctx.beginPath();
+        const r = canvas.getBoundingClientRect();
+        ctx.moveTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top);
+      }, { passive: true });
+
+      canvas.addEventListener('touchmove', (e) => {
+        if (drawing) {
+          const r = canvas.getBoundingClientRect();
+          ctx.lineTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top);
+          ctx.stroke();
+        }
+      }, { passive: true });
+
+      canvas.addEventListener('touchend', () => { drawing = false; });
+
+      window.clearCanvas = function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      };
+
+      window.buildCollectibleCard = function() {
+        const name = document.getElementById('masc-name').value || "Mascota Súper Estrella";
+        const anim = document.getElementById('masc-anim').value || "Criatura Fantástica";
+        const color = document.getElementById('masc-color').value || "Arcoíris";
+        const power = document.getElementById('masc-power').value || "Vuelo Sónico";
+
+        document.getElementById('card-name').innerText = name;
+        document.getElementById('card-anim').innerText = anim;
+        document.getElementById('card-color').innerText = color;
+        document.getElementById('card-power').innerText = power;
+
+        // Traspasar el dibujo al cromo final
+        const img = document.getElementById('card-image');
+        img.src = canvas.toDataURL();
+
+        document.getElementById('collectible-card').classList.remove('hidden');
+
+        markGameCompleted("desafio-final");
+        showToast("🌟 ¡Has creado un Cromo Brillante Oficial!", "success");
+      }
+    }
+
+    // Inicialización al cargar la página
+    window.onload = function() {
+      renderCatalog();
+    };
+  </script>
+</body>
+</html>
